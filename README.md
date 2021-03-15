@@ -1,15 +1,15 @@
 # MyMoviesDB 	
-Programa em Java para gerenciamento pessoal de filmes/séries. :movie_camera: :film_strip:
+##Programa em Java para gerenciamento pessoal de filmes/séries. :movie_camera: :film_strip:
 
 O programa MyMoviesDB tem o objetivo de armazenar e exibir avalições sobre produções de cinema através de arquivos. Ele é capaz de:
 
-**Cadastrar, consultar, atualizar e deletar:** 
+###**Cadastrar, consultar, atualizar e deletar:** 
 - Filmes (Título, Ano, Faixa Etária, Gênero, Duração, Ano, Diretor, Descrição, Nota Geral);
 - Avaliações (Avaliador, Data, Nota (0.00 a 10.00), Crítica, Filme);
 - Avaliadores (Nome, Idade).
 - Listas de Filmes (Id da Lista, Filmes).
 
-Obervações: :warning:
+###Obervações: :warning:
 - Exibe N/A (nenhuma avaliação) na Nota Geral caso não tenha nenhuma avaliação.
 - O programa exibe listas de Filmes ordenadas pela Nota Geral (da maior para menor);
 - O programa exibe Avaliações dos filmes ordenadas pela Data (da mais recente para a mais antiga);
