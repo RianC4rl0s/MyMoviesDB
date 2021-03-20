@@ -16,4 +16,4 @@ O programa MyMoviesDB tem o objetivo de armazenar e exibir avalições sobre pro
 - A lista de filmes serve como uma lista para os filmes que o usuário quer assistir, funcionando como uma fila e dando prioridade ao primeiro filme.
 - O programa não consulta com interface gráfica. Seu uso se restringe ao terminal.
 
-O programa tem sua estrutura baseada na arquitetura MVC, entretanto, devido à sua simplicidade e sem a necessidade de interface gráfica, apenas o pacote para modelagem dos dados é implementado. O pacote Model está dividido entre os pacotes DAO(Data Access Object), BO(Business Object) e VO(Value Object).
+O sistema tem sua estrutura baseada na arquitetura MVC, entretanto, devido à sua simplicidade e sem a necessidade de interface gráfica, apenas o pacote para modelagem dos dados é implementado. O pacote Model está dividido entre os pacotes DAO(Data Access Object), BO(Business Object) e VO(Value Object). É desenvolvido utilizando Java 8 no Eclipse IDE.
