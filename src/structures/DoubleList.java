@@ -1,4 +1,4 @@
-package br.com.MyMoviesDB.structures;
+package structures;
 
 public class DoubleList <T> implements ListInterface<T> {
 	

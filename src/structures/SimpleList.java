@@ -1,4 +1,4 @@
-package br.com.MyMoviesDB.structures;
+package structures;
 
 public class SimpleList <T> implements ListInterface<T> {
 	

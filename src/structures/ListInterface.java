@@ -1,4 +1,4 @@
-package br.com.MyMoviesDB.structures;
+package structures;
 
 public interface ListInterface <T> {
 

@@ -1,6 +1,6 @@
 package br.com.MyMoviesDB.model.VO;
 
-import br.com.MyMoviesDB.structures.QueueInterface;
+import structures.QueueInterface;
 
 public class ListaFilmesVO {
 
