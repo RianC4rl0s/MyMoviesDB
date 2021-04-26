@@ -270,7 +270,7 @@ public class DoubleList <T> implements ListInterface<T> {
 				tail.next = null;
 			} else {
 				previous.next = removed.next;
-				removed.next.prev = null;
+				removed.next.prev = previous;
 				removed.prev = null;
 				removed.next = null;
 			}
