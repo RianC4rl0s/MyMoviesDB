@@ -1,7 +1,15 @@
 package br.com.MyMoviesDB.model.VO;
 
-public class FilmeVO {
+import java.io.Serializable;
 
+public class FilmeVO implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3701530536791407915L;
+	
+	
 	private String title, genre, durationTime, director, description;
 	private int year;
 	private int ageRange;

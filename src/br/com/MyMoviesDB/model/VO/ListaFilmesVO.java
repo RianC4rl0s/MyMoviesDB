@@ -1,9 +1,16 @@
 package br.com.MyMoviesDB.model.VO;
 
+import java.io.Serializable;
+
 import structures.QueueInterface;
 
-public class ListaFilmesVO {
-
+public class ListaFilmesVO implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3793380992668459720L;
+	
 	private long id;
 	private QueueInterface<FilmeVO> movieList;
 

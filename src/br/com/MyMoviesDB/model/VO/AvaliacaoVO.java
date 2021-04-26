@@ -1,9 +1,15 @@
 package br.com.MyMoviesDB.model.VO;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class AvaliacaoVO {
+public class AvaliacaoVO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3257722554720400018L;
+	
 	private AvaliadorVO evaluator;
 	private Calendar date;
 	private double evaluation;
