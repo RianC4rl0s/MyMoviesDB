@@ -11,6 +11,8 @@ public interface ListInterface <T> {
 	void addLast(T value);
 	void addAfter(T value, int id);
 	
+	void updateData(T value, int id);
+	
 	T peekFirst();
 	T peekLast();
 	

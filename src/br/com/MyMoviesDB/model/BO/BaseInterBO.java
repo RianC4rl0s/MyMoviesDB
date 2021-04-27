@@ -7,6 +7,8 @@ public interface BaseInterBO<T> {
 	void update(T obj, int id);
 
 	void delete(int id);
+	
+	T search(int id);
 
 	void read();
 

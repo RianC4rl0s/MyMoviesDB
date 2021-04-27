@@ -37,6 +37,7 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 				movies.addLast(obj);
 				try {
 					dao.writer(movies);
+					System.out.println("Filme Cadastrado!");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -55,11 +56,10 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 		if (obj != null) {
 			if (movies.search(id) != null) {
 				if (obj.getTitle() != null) {
-					movies.addAfter(obj, id);
-					movies.remove(id);
-
+					movies.updateData(obj, id);
 					try {
 						dao.writer(movies);
+						System.out.println("Filme Editado!");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -84,6 +84,7 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 
 			try {
 				dao.writer(movies);
+				System.out.println("Filme Deletado!");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -96,6 +97,19 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 	@Override
 	public void read() {
 		movies.show();
+	}
+
+	@Override
+	public FilmeVO search(int id) {
+		
+		FilmeVO movie = (FilmeVO) movies.search(id);
+		
+		if (movie != null) {
+			return movie;
+		} else {
+			return null;
+		}
+		
 	}
 
 }
