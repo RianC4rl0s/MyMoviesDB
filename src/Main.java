@@ -195,20 +195,35 @@ public class Main {
 					AvaliacaoVO avaliacao = new AvaliacaoVO();
 					
 					System.out.println("Digite o id do filme desejado");
-					
+					System.out.println(1);
 					int movieID = cin.nextInt();
-					if(filmeBO.search(movieID) != null) {
-
-						avaliacao.setMovie(cin.nextInt());
+					if(filmeBO.search(1) != null) {
+						System.out.println(1);
+						avaliacao.setMovie(movieID);
 						cin.nextLine();
-						
+						System.out.println(1);
 						System.out.println("Digite sua critica: ");
 						avaliacao.setCriticism(cin.nextLine());
 						
 						
 						avaliacao.setDate(Calendar.getInstance());
 						System.out.println("Digite a nota do filme: ");
-						avaliacao.setEvaluation(cin.nextDouble());
+						double evaluate = cin.nextDouble();
+						
+						avaliacao.setEvaluation(evaluate);
+						
+						FilmeVO m = filmeBO.search(movieID);
+						String ge = m.getGeneralEvaluation();
+						
+						if(ge.matches("N/A")) {
+							m.setGeneralEvaluation( Double.toString( evaluate));
+							filmeBO.update(m, movieID);
+						}else {
+							ge = Double.toString((Double.parseDouble(ge) + evaluate)/2);
+							m.setGeneralEvaluation(ge);
+							filmeBO.update(m, movieID);
+						}
+						
 						avaliacao.setEvaluator(1);
 						
 						avaliacaoBO.create(avaliacao);
@@ -285,6 +300,7 @@ public class Main {
 					
 					avaliacaoBO.read();
 					System.out.println();
+					break;
 				}
 				default:
 					System.out.println("Opção invalida!!!");
