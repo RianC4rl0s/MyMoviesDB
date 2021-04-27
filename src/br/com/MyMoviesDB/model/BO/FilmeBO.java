@@ -12,7 +12,6 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 
 	BaseInterDAO<ListInterface<Object>> dao;
 	ListInterface<Object> movies;
-	String path = "data/movies.dat";
 
 	public FilmeBO() {
 

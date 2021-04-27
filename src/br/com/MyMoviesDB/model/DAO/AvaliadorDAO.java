@@ -11,12 +11,12 @@ import java.io.ObjectOutputStream;
 import structures.DoubleList;
 import structures.ListInterface;
 
-public class FilmeDAO implements BaseInterDAO<ListInterface<Object>> {
+public class AvaliadorDAO implements BaseInterDAO<ListInterface<Object>> {
 
 	@Override
 	public void writer(ListInterface<Object> list) throws IOException {
 
-		File file = new File("data/movies.bin");
+		File file = new File("data/evaluators.bin");
 		file.delete();
 		file.createNewFile();
 
@@ -34,10 +34,10 @@ public class FilmeDAO implements BaseInterDAO<ListInterface<Object>> {
 
 	@Override
 	public ListInterface<Object> reader() throws IOException, ClassNotFoundException {
-
+		
 		ListInterface<Object> lista = new DoubleList<Object>();
 
-		File file = new File("data/movies.bin");
+		File file = new File("data/evaluators.bin");
 
 		if (file.exists()) {
 			ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(file));
