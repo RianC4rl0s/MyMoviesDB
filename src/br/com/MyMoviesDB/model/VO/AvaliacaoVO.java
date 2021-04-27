@@ -3,6 +3,8 @@ package br.com.MyMoviesDB.model.VO;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import br.com.MyMoviesDB.model.BO.FilmeBO;
+
 public class AvaliacaoVO implements Serializable {
 
 	/**
@@ -10,18 +12,18 @@ public class AvaliacaoVO implements Serializable {
 	 */
 	private static final long serialVersionUID = -3257722554720400018L;
 	
-	private AvaliadorVO evaluator;
+	private int evaluatorID;
 	private Calendar date;
 	private double evaluation;
 	private String criticism;
-	private FilmeVO movie;
+	private int movieID;
 
-	public AvaliadorVO getEvaluator() {
-		return evaluator;
+	public int getEvaluator() {
+		return evaluatorID;
 	}
 
-	public void setEvaluator(AvaliadorVO evaluator) {
-		this.evaluator = evaluator;
+	public void setEvaluator(int evaluator) {
+		this.evaluatorID = evaluator;
 	}
 
 	public Calendar getDate() {
@@ -48,18 +50,19 @@ public class AvaliacaoVO implements Serializable {
 		this.criticism = criticism;
 	}
 
-	public FilmeVO getMovie() {
-		return movie;
+	public int getMovie() {
+		return movieID;
 	}
 
-	public void setMovie(FilmeVO movie) {
-		this.movie = movie;
+	public void setMovie(int movie) {
+		this.movieID = movie;
 	}
 
 	@Override
 	public String toString() {
-		return "AvaliacaoVO [Avaliador = " + evaluator + ", Data = " + date + ", Nota = " + evaluation + ", Crítica = "
-				+ criticism + ", Filme = " + movie + "]";
+		FilmeVO movie  = new FilmeBO().search(this.movieID); 
+		return "AvaliacaoVO [Avaliador = " + evaluatorID + ", Data = " + date + ", Nota = " + evaluation + ", Crítica = "
+				+ criticism + ", Filme = " + movie.toString() + "]";
 	}
 
 }

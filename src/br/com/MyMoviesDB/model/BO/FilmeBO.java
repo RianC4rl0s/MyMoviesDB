@@ -111,5 +111,14 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 		}
 		
 	}
-
+	public ListInterface<Object> searchByName(String name){
+		ListInterface<Object> list = new DoubleList<Object>();
+			for(int i = 0; i < movies.getSize();i++) {
+				FilmeVO movie = (FilmeVO) movies.search(i);
+				if( movie.getTitle().contains(name)){
+					list.addLast(movie);
+				}
+			}
+		return list;
+	}
 }

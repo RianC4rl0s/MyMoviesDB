@@ -1,7 +1,10 @@
+import java.util.Calendar;
 import java.util.Scanner;
 
+import br.com.MyMoviesDB.model.BO.AvaliacaoBO;
 import br.com.MyMoviesDB.model.BO.BaseInterBO;
 import br.com.MyMoviesDB.model.BO.FilmeBO;
+import br.com.MyMoviesDB.model.VO.AvaliacaoVO;
 import br.com.MyMoviesDB.model.VO.FilmeVO;
 
 public class Main {
@@ -12,6 +15,7 @@ public class Main {
 		Scanner cin = new Scanner(System.in);
 
 		BaseInterBO<FilmeVO> filmeBO = new FilmeBO();
+		BaseInterBO<AvaliacaoVO> avaliacaoBO = new AvaliacaoBO();
 
 		do {
 
@@ -26,7 +30,9 @@ public class Main {
 			opc = cin.nextInt();
 
 			switch (opc) {
-
+			//=====================================================
+			//FILME
+			//=====================================================
 			case 1: {
 
 				int opcF;
@@ -166,6 +172,126 @@ public class Main {
 				
 				break;
 			}
+			//======================================================
+			//AVALIAÇÕES
+			//======================================================
+			case 3:{
+			
+				int opcF;
+				System.out.println();
+				System.out.println("======= Avaliações =======");
+				System.out.println("1 - Avaliar");
+				System.out.println("2 - Editar");
+				System.out.println("3 - Deletar");
+				System.out.println("4 - Listar");
+				System.out.print("\nEscolha uma opção: ");
+
+				opcF = cin.nextInt();
+				cin.nextLine();
+				switch (opcF) {
+				case 1: {
+					System.out.println();
+					System.out.println("= Avaliar =");
+					AvaliacaoVO avaliacao = new AvaliacaoVO();
+					
+					System.out.println("Digite o id do filme desejado");
+					
+					int movieID = cin.nextInt();
+					if(filmeBO.search(movieID) != null) {
+
+						avaliacao.setMovie(cin.nextInt());
+						cin.nextLine();
+						
+						System.out.println("Digite sua critica: ");
+						avaliacao.setCriticism(cin.nextLine());
+						
+						
+						avaliacao.setDate(Calendar.getInstance());
+						System.out.println("Digite a nota do filme: ");
+						avaliacao.setEvaluation(cin.nextDouble());
+						avaliacao.setEvaluator(1);
+						
+						avaliacaoBO.create(avaliacao);
+					}else {
+						System.out.println("Filme não encontrado!");
+						System.out.println();
+					}
+					
+					break;
+				}case 2: {
+					System.out.println();
+					System.out.println("========== EDITAR AVALIAÇÂO =========");
+					AvaliacaoVO avaliacao = new AvaliacaoVO();
+					
+					
+						
+						int avaliacaoID = cin.nextInt();
+						cin.nextLine();
+						if(avaliacaoBO.search(avaliacaoID) != null) {
+							System.out.println("Digite o id do filme desejado");
+							
+							int movieID = cin.nextInt();
+							if(filmeBO.search(movieID) != null) {
+
+								avaliacao.setMovie(cin.nextInt());
+								cin.nextLine();
+								
+								System.out.println("Digite sua critica: ");
+								avaliacao.setCriticism(cin.nextLine());
+								
+								
+								avaliacao.setDate(Calendar.getInstance());
+								System.out.println("Digite a nota do filme: ");
+								avaliacao.setEvaluation(cin.nextDouble());
+								avaliacao.setEvaluator(1);
+								
+								
+							avaliacaoBO.update(avaliacao, avaliacaoID);
+						}
+						
+						
+					}else {
+						System.out.println("Filme não encontrado!");
+						System.out.println();
+					}
+					
+					break;
+				}
+				case 3:{
+					System.out.println();
+					System.out.println("= DELETAR AVALIAÇÃO =");
+					System.out.println("Digite o id da avaliação a ser deletada");
+					int avaliacaoID = cin.nextInt();
+					cin.nextLine();
+					if(avaliacaoBO.search(avaliacaoID) != null) {
+						System.out.println("Realmente deseja apagar a avaliação: Sim(s), Não(qualquer valor)");
+						char confirm = cin.next().charAt(0);
+						if(confirm == 'S' || confirm == 's') {
+							avaliacaoBO.delete(avaliacaoID);
+						}else {
+							System.out.println("Operação cancelada");
+						}
+						
+					}else {
+						System.out.println("Id de valiação invalido");
+					}
+					
+					
+					break;
+				}
+				case 4:{
+					System.out.println();
+					System.out.println("= LISTAR AVALIAÇÕES =");
+					
+					avaliacaoBO.read();
+					System.out.println();
+				}
+				default:
+					System.out.println("Opção invalida!!!");
+				}
+				break;
+			}
+			
 			
 			case 5: {
 				System.out.println("Operação finalizada!");
