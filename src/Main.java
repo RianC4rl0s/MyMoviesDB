@@ -2,9 +2,11 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 import br.com.MyMoviesDB.model.BO.AvaliacaoBO;
+import br.com.MyMoviesDB.model.BO.AvaliadorBO;
 import br.com.MyMoviesDB.model.BO.BaseInterBO;
 import br.com.MyMoviesDB.model.BO.FilmeBO;
 import br.com.MyMoviesDB.model.VO.AvaliacaoVO;
+import br.com.MyMoviesDB.model.VO.AvaliadorVO;
 import br.com.MyMoviesDB.model.VO.FilmeVO;
 
 public class Main {
@@ -173,6 +175,21 @@ public class Main {
 				break;
 			}
 			//======================================================
+			//AVALIADORES
+			//======================================================
+			
+			/*case 2:{
+			 
+			 
+			 
+			 
+			 break;
+			 }
+			 */
+			
+			
+			
+			//======================================================
 			//AVALIAÇÕES
 			//======================================================
 			case 3:{
@@ -226,8 +243,19 @@ public class Main {
 							m.setGeneralEvaluation(ge);
 							filmeBO.update(m, movieID);
 						}
+						System.out.println("Digite seu id de valiador: ");
+						Long idAvaliador = cin.nextLong();
+						BaseInterBO<AvaliadorVO> avaliadorBO = new AvaliadorBO();
+						int i =1;
+						while(avaliadorBO.search(i)!= null){
+							if(avaliadorBO.search(i).getKey() == idAvaliador){
+								avaliacao.setEvaluator(avaliadorBO.search(i).getKey());
+								break;
+							}else {
+								i++;
+							}
+						}
 						
-						avaliacao.setEvaluator(1);
 						
 						avaliacaoBO.create(avaliacao);
 						
@@ -285,7 +313,18 @@ public class Main {
 											filmeBO.update(m, movieID);
 										}
 								
-									avaliacao.setEvaluator(1);
+										System.out.println("Digite seu id de valiador: ");
+										Long idAvaliador = cin.nextLong();
+										BaseInterBO<AvaliadorVO> avaliadorBO = new AvaliadorBO();
+										int i =1;
+										while(avaliadorBO.search(i)!= null){
+											if(avaliadorBO.search(i).getKey() == idAvaliador){
+												avaliacao.setEvaluator(avaliadorBO.search(i).getKey());
+												break;
+											}else {
+												i++;
+											}
+										}
 									
 									avaliacaoBO.create(avaliacao);
 								}
