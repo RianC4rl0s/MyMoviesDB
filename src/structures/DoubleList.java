@@ -11,13 +11,13 @@ public class DoubleList<T> implements ListInterface<T> {
 		Node next;
 		Node prev;
 
-		public Node(T data, Node prev) {
+		public Node(T data) {
 			this.id = nextId;
 			nextId++;
 
 			this.data = data;
 			this.next = null;
-			this.prev = prev;
+			this.prev = null;
 		}
 
 	}
@@ -47,7 +47,7 @@ public class DoubleList<T> implements ListInterface<T> {
 			}
 		}
 
-		//System.out.println("Size: " + size);
+		// System.out.println("Size: " + size);
 	}
 
 	@Override
@@ -64,13 +64,13 @@ public class DoubleList<T> implements ListInterface<T> {
 			}
 		}
 
-		//System.out.println("Size: " + size);
+		// System.out.println("Size: " + size);
 	}
 
 	@Override
 	public void addFirst(T value) {
 
-		Node novo = new Node(value, null);
+		Node novo = new Node(value);
 
 		if (head == null) {
 			head = novo;
@@ -88,12 +88,13 @@ public class DoubleList<T> implements ListInterface<T> {
 	@Override
 	public void addLast(T value) {
 
-		Node novo = new Node(value, tail);
+		Node novo = new Node(value);
 
 		if (head == null) {
 			head = novo;
 			tail = novo;
 		} else {
+			novo.prev = tail;
 			tail.next = novo;
 			tail = novo;
 		}
@@ -110,14 +111,20 @@ public class DoubleList<T> implements ListInterface<T> {
 		if (p == null) {
 			System.out.println("Invalid");
 		} else {
-			Node novo = new Node(value, p);
+			Node novo = new Node(value);
 
 			if (p.next == null) {
 				tail = novo;
 			}
 
 			novo.next = p.next;
+			novo.prev = p;
 			p.next = novo;
+
+			Node frente = novo.next;
+			if (frente != null) {
+				frente.prev = novo;
+			}
 
 			size++;
 		}
@@ -143,7 +150,7 @@ public class DoubleList<T> implements ListInterface<T> {
 	public T peekFirst() {
 
 		if (head == null) {
-			System.out.println("Empty list");
+			//System.out.println("Empty list");
 			return null;
 		} else {
 			return head.data;
