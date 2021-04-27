@@ -28,7 +28,7 @@ public class AvaliacaoDAO implements BaseInterDAO<ListInterface<Object>>{
 		ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(file));
 		
 		for (int i = 0; i < list.getSize();i++) {
-			
+			objOutput.writeObject(list.search(i));
 		}
 		objOutput.close();
 	}
