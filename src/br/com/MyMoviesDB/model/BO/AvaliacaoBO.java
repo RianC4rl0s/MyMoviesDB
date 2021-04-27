@@ -5,14 +5,13 @@ import java.io.IOException;
 import br.com.MyMoviesDB.model.DAO.AvaliacaoDAO;
 import br.com.MyMoviesDB.model.DAO.BaseInterDAO;
 import br.com.MyMoviesDB.model.VO.AvaliacaoVO;
-import br.com.MyMoviesDB.model.VO.FilmeVO;
 import structures.DoubleList;
 import structures.ListInterface;
 
 public class AvaliacaoBO implements BaseInterBO<AvaliacaoVO>{
 	BaseInterDAO<ListInterface<Object>> dao;
 	ListInterface<Object> ratings;
-	//String path = "data/evaluate.dat";
+
 	
 	public AvaliacaoBO() {
 		dao = new AvaliacaoDAO();

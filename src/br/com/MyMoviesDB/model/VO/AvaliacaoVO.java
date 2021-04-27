@@ -1,6 +1,7 @@
 package br.com.MyMoviesDB.model.VO;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import br.com.MyMoviesDB.model.BO.FilmeBO;
@@ -61,7 +62,7 @@ public class AvaliacaoVO implements Serializable {
 	@Override
 	public String toString() {
 		FilmeVO movie  = new FilmeBO().search(this.movieID); 
-		return "AvaliacaoVO [Avaliador = " + evaluatorID + ", Data = " + date + ", Nota = " + evaluation + ", Crítica = "
+		return "AvaliacaoVO [Avaliador = " + evaluatorID + ", Data = " +  new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(date.getTime())+ ", Nota = " + evaluation + ", Crítica = "
 				+ criticism + ", Filme = " + movie.toString() + "]";
 	}
 

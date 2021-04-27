@@ -1,13 +1,13 @@
 package br.com.MyMoviesDB.model.DAO;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+//import java.io.BufferedReader;
+//import java.io.BufferedWriter;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
+//import java.io.FileReader;
+//import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,44 +18,51 @@ import structures.ListInterface;
 
 public class AvaliacaoDAO implements BaseInterDAO<ListInterface<Object>>{
 	
-	private String pathBin = "data/rtData.bin";
-	private String pathCSV = "data/rtCSVdata.csv";
-	public void writer(ListInterface<Object> list) throws IOException{
-		File file = new File(pathBin);
+	//private String pathBin = "data/rtData.bin";
+	//private String pathCSV = "data/rtCSVdata.csv";
+	
+	
+	@Override
+	public void writer(ListInterface<Object> list) throws IOException {
+
+		File file = new File("data/rtData.bin");
 		file.delete();
 		file.createNewFile();
-		
+
 		ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(file));
-		
-		for (int i = 0; i < list.getSize();i++) {
+
+		for (int i = 1; i <= list.getSize(); i++) {
 			objOutput.writeObject(list.search(i));
 		}
+
 		objOutput.close();
 	}
+	@Override
 	public ListInterface<Object> reader() throws IOException, ClassNotFoundException {
+
 		ListInterface<Object> list = new DoubleList<Object>();
-		
-		File file = new File(pathBin);
-		
-		if(file.exists()) {
+
+		File file = new File("data/rtData.bin");
+
+		if (file.exists()) {
 			ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(file));
-			Object o;
-			 try {
-				 while((o =  objInput.readObject()) != null) {
-					 list.addFirst(o);
-				 }
 
-			 }catch(EOFException e) {
-					System.out.println("Lista completamente lida!");
+			Object x;
 
-			 }
-			 
-			 objInput.close();
-		
+			try {
+				while ((x = objInput.readObject()) != null) {
+					list.addFirst(x);
+				}
+			} catch (EOFException e) {
+				//System.out.println("Lista completamente lida!");
+			}
+
+			objInput.close();
 		}
-		
+
 		return list;
 	}
+	/*
 	public String textReader() throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(pathCSV));
 		StringBuffer sB = new StringBuffer();
@@ -71,5 +78,5 @@ public class AvaliacaoDAO implements BaseInterDAO<ListInterface<Object>>{
 		BufferedWriter bw = new BufferedWriter(new FileWriter(pathCSV));
 		bw.append(text);
 		bw.close();
-	}
+	}*/
 }
