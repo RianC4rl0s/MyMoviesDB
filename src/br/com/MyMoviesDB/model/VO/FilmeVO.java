@@ -13,8 +13,17 @@ public class FilmeVO implements Serializable {
 	private String title, genre, durationTime, director, description;
 	private int year;
 	private int ageRange;
-	private String generalEvaluation;
-	private int evaluationQt = 0;
+	private String generalEvaluation =  "N/A";
+	private double sumEvaluations;
+	private int evaluationQt;
+
+	public double getSumEvaluations() {
+		return sumEvaluations;
+	}
+
+	public void setSumEvaluations(double sumEvaluations) {
+		this.sumEvaluations = sumEvaluations;
+	}
 
 	public String getTitle() {
 		return title;
@@ -76,8 +85,8 @@ public class FilmeVO implements Serializable {
 		return generalEvaluation;
 	}
 
-	public void setGeneralEvaluation(String generalEvaluation) {
-		this.generalEvaluation = generalEvaluation;
+	public void setGeneralEvaluation() {
+		this.generalEvaluation = Double.toString(sumEvaluations / evaluationQt);
 	}
 
 	@Override

@@ -7,18 +7,17 @@ import java.util.Calendar;
 import br.com.MyMoviesDB.model.BO.AvaliadorBO;
 import br.com.MyMoviesDB.model.BO.FilmeBO;
 
-public class AvaliacaoVO implements Serializable {	
+public class AvaliacaoVO implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3257722554720400018L;
-	
+
 	private Calendar date;
 	private double evaluation;
 	private String criticism;
 	private int movieKey;
 	private int evaluatorKey;
-	private int oldEvaluationQt;
 
 	public long getEvaluator() {
 		return evaluatorKey;
@@ -62,18 +61,10 @@ public class AvaliacaoVO implements Serializable {
 
 	@Override
 	public String toString() {
-		FilmeVO movie  = new FilmeBO().searchByKey(this.movieKey); 
+		FilmeVO movie = new FilmeBO().searchByKey(this.movieKey);
 		AvaliadorVO avaliador = new AvaliadorBO().searchByKey(this.evaluatorKey);
-		return "[Avaliador = " + avaliador + ", Data = " +  new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(date.getTime())+ ", Nota = " + evaluation + ", Crítica = "
-				+ criticism + ", Filme = " + movie.toString() + "]";
+		return "[Avaliador = " + avaliador + ", Data = "
+				+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(date.getTime()) + ", Nota = " + evaluation
+				+ ", Crítica = " + criticism + ", Filme = " + movie.toString() + "]";
 	}
-
-	public int getOldEvaluationQt() {
-		return oldEvaluationQt;
-	}
-
-	public void setOldEvaluationQt(int oldEvaluationQt) {
-		this.oldEvaluationQt = oldEvaluationQt;
-	}
-
 }

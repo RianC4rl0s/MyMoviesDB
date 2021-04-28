@@ -76,8 +76,6 @@ public class Main {
 					System.out.print("Faixa Etária: ");
 					movie.setAgeRange(cin.nextInt());
 
-					movie.setGeneralEvaluation("N/A");
-
 					filmeBO.create(movie);
 
 					System.out.println();
@@ -339,23 +337,11 @@ public class Main {
 						double evaluate = cin.nextDouble();
 
 						avaliacao.setEvaluation(evaluate);
-
-						String generalEvaluation = movie.getGeneralEvaluation();
-						int oldEvaluationQt = movie.getEvaluationQt();
-						int evaluationQt = oldEvaluationQt + 1;
-
-						if (generalEvaluation.matches("N/A")) {
-							movie.setGeneralEvaluation(Double.toString(evaluate));
-						} else {
-							double avarage = (Double.parseDouble(generalEvaluation) * oldEvaluationQt / evaluationQt)
-									+ (evaluate / evaluationQt);
-							generalEvaluation = Double.toString(avarage);
-							movie.setGeneralEvaluation(generalEvaluation);
-						}
-
-						avaliacao.setOldEvaluationQt(oldEvaluationQt); // Salvando a quantidade de avalições que havia
-																		// antes para operações futuras
-						movie.setEvaluationQt(evaluationQt);
+						
+						movie.setSumEvaluations(movie.getSumEvaluations() + evaluate); // Soma das avaliações
+						movie.setEvaluationQt(movie.getEvaluationQt() + 1); // Quantidade das avaliações
+						
+						movie.setGeneralEvaluation();	// Setando nova média
 
 						System.out.println("Digite sua chave de avaliador: ");
 						int evaluatorKey = cin.nextInt();
@@ -393,7 +379,6 @@ public class Main {
 
 						int movieKey = avaliacao.getMovie();
 						FilmeVO movie = filmeBO.searchByKey(movieKey);
-						int evaluationQt = movie.getEvaluationQt();
 						char confirmar;
 
 						System.out.println("Deseja editar critica? Sim(s), Não(Qualquer tecla)");
@@ -412,22 +397,15 @@ public class Main {
 
 							System.out.println("Digite a nota do filme(0-10): ");
 							double evaluate = cin.nextDouble();
+							
+							double oldEvaluate = avaliacao.getEvaluation();
+							
 							avaliacao.setEvaluation(evaluate);
 
-							String generalEvaluation = movie.getGeneralEvaluation();
-
-							// Restaurando valor da avaliação geral do filme com a fórmula:
-							// ((avaliaçãoGeral * quantidadeAvaliações) - últimaAvaliacao) /
-							// quantidadeAntigaAvaliações
-							double oldGeneralEvaluation = ((Double.parseDouble(generalEvaluation) * evaluationQt)
-									- avaliacao.getEvaluation()) / avaliacao.getOldEvaluationQt();
-
-							double avarage = (oldGeneralEvaluation * avaliacao.getOldEvaluationQt() / evaluationQt)
-									+ (evaluate / evaluationQt); // Gerando novo valor
-							generalEvaluation = Double.toString(avarage);
-							movie.setGeneralEvaluation(generalEvaluation);
-
-							movie.setEvaluationQt(evaluationQt);
+							movie.setSumEvaluations(movie.getSumEvaluations() - oldEvaluate); // Diminuindo a nota antiga na soma das avaliações
+							movie.setSumEvaluations(movie.getSumEvaluations() + evaluate); // Somando com novo valor com a soma
+							
+							movie.setGeneralEvaluation(); // Setando nova média
 
 							System.out.println("Digite seu id de valiador: ");
 							int evaluatorKey = cin.nextInt();
@@ -469,16 +447,12 @@ public class Main {
 							// Pegando informações do filme daquela avaliação para restaurar a nota geral
 							int movieKey = avaliacao.getMovie();
 							FilmeVO movie = filmeBO.searchByKey(movieKey);
-							String generalEvaluation = movie.getGeneralEvaluation();
-							int evaluationQt = movie.getEvaluationQt();
+							
+							movie.setSumEvaluations(movie.getSumEvaluations() - avaliacao.getEvaluation()); // Diminuindo a nota na soma das avaliações
+							movie.setEvaluationQt(movie.getEvaluationQt() - 1); // Diminuindo a quantidade de avaliações do filme
+							
+							movie.setGeneralEvaluation(); // Setando nova média
 
-							double oldGeneralEvaluation = ((Double.parseDouble(generalEvaluation) * evaluationQt)
-									- avaliacao.getEvaluation()) / avaliacao.getOldEvaluationQt();
-
-							avaliacaoBO.delete(avaliacaoID);
-
-							movie.setGeneralEvaluation(Double.toString(oldGeneralEvaluation));
-							movie.setEvaluationQt(evaluationQt - 1); // Diminuindo quantidade de avaliações do filme
 							filmeBO.update(movie, filmeBO.searchId(movieKey));
 
 						} else {
