@@ -22,13 +22,18 @@ public class FilmeDAO implements BaseInterDAO<ListInterface<Object>> {
 
 		ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(file));
 
-		for (int i = 1; i <= list.getSize(); i++) {
-			Object obj = list.search(i);
-			if (obj != null) {
-				objOutput.writeObject(obj);
-			}
-		}
+		int lastId = list.peekLastId();
 
+		if (lastId > 0) {
+			for (int i = 1; i <= lastId; i++) {
+				Object obj = list.search(i);
+				if (obj != null) {
+					objOutput.writeObject(obj);
+				}
+			}
+		} else {
+			System.out.println("ERR: Lista Vazia");
+		}
 		objOutput.close();
 	}
 
@@ -46,7 +51,7 @@ public class FilmeDAO implements BaseInterDAO<ListInterface<Object>> {
 
 			try {
 				while ((x = objInput.readObject()) != null) {
-					lista.addFirst(x);
+					lista.addLast(x);
 				}
 			} catch (EOFException e) {
 				//System.out.println("Lista completamente lida!");

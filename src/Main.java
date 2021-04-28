@@ -18,6 +18,7 @@ public class Main {
 
 		BaseInterBO<FilmeVO> filmeBO = new FilmeBO();
 		BaseInterBO<AvaliacaoVO> avaliacaoBO = new AvaliacaoBO();
+		BaseInterBO<AvaliadorVO> avaliadorBO = new AvaliadorBO();
 
 		do {
 
@@ -177,18 +178,125 @@ public class Main {
 			//======================================================
 			//AVALIADORES
 			//======================================================
-			
-			/*case 2:{
-			 
-			 
-			 
-			 
-			 
-			 }
-			 */
-			
-			
-			
+			case 2: {
+
+				int opcF;
+
+				System.out.println();
+				System.out.println("==== AVALIADORES ====");
+				System.out.println("1 - Cadastrar");
+				System.out.println("2 - Editar");
+				System.out.println("3 - Deletar");
+				System.out.println("4 - Listar");
+				System.out.print("\nEscolha uma opção: ");
+
+				opcF = cin.nextInt();
+				cin.nextLine();
+
+				switch (opcF) {
+
+				case 1: {
+
+					AvaliadorVO evaluator = new AvaliadorVO();
+
+					System.out.println();
+					System.out.println("= CADASTRAR AVALIADOR =");
+
+					System.out.print("Nome: ");
+					evaluator.setName(cin.nextLine());
+					System.out.print("Idade: ");
+					evaluator.setAge(cin.nextInt());
+
+					cin.nextLine();
+
+					avaliadorBO.create(evaluator);
+
+					System.out.println();
+
+					break;
+				}
+
+				case 2: {
+
+					AvaliadorVO evaluator = new AvaliadorVO();
+
+					System.out.println();
+					System.out.println("= EDITAR AVALIADOR =");
+					avaliadorBO.read();
+
+					System.out.print("Escolha o avaliador a ser editado pelo id: ");
+					int id = cin.nextInt();
+					cin.nextLine();
+
+					if (avaliadorBO.search(id) != null) {
+
+						System.out.println("Digite as novas informações: ");
+
+						System.out.print("Nome: ");
+						evaluator.setName(cin.nextLine());
+						System.out.print("Idade: ");
+						evaluator.setAge(cin.nextInt());
+
+						cin.nextLine();
+
+						avaliadorBO.update(evaluator, id);
+
+						System.out.println();
+					} else {
+						System.out.println("Avaliador não encontrado!");
+						System.out.println();
+					}
+
+					break;
+				}
+
+				case 3: {
+
+					System.out.println();
+					System.out.println("= DELETAR AVALIADOR =");
+					avaliadorBO.read();
+
+					System.out.print("Escolha o avaliador a ser deletado pelo id: ");
+					int id = cin.nextInt();
+					cin.nextLine();
+
+					if (avaliadorBO.search(id) != null) {
+
+						System.out.print("Tem certeza que deseja deletar? S - 1/N - 0 ");
+						int resp = cin.nextInt();
+
+						if (resp == 1) {
+							avaliadorBO.delete(id);
+						}
+
+						System.out.println();
+					} else {
+						System.out.println("Avaliador não encontrado!");
+						System.out.println();
+					}
+
+					break;
+				}
+
+				case 4: {
+
+					System.out.println();
+					System.out.println("= LISTAR AVALIADORES =");
+					avaliadorBO.read();
+					System.out.println();
+
+					break;
+				}
+
+				default: {
+					System.out.println("Entrada Inválida");
+					System.out.println();
+				}
+
+				}
+
+				break;
+			}		
 			//======================================================
 			//AVALIAÇÕES
 			//======================================================
@@ -245,7 +353,6 @@ public class Main {
 						}
 						System.out.println("Digite seu id de valiador: ");
 						Long idAvaliador = cin.nextLong();
-						BaseInterBO<AvaliadorVO> avaliadorBO = new AvaliadorBO();
 						int i =1;
 						while(avaliadorBO.search(i)!= null){
 							if(avaliadorBO.search(i).getKey() == idAvaliador){
@@ -315,7 +422,6 @@ public class Main {
 								
 										System.out.println("Digite seu id de valiador: ");
 										Long idAvaliador = cin.nextLong();
-										BaseInterBO<AvaliadorVO> avaliadorBO = new AvaliadorBO();
 										int i =1;
 										while(avaliadorBO.search(i)!= null){
 											if(avaliadorBO.search(i).getKey() == idAvaliador){

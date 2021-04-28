@@ -150,7 +150,7 @@ public class DoubleList<T> implements ListInterface<T> {
 	public T peekFirst() {
 
 		if (head == null) {
-			//System.out.println("Empty list");
+			// System.out.println("Empty list");
 			return null;
 		} else {
 			return head.data;
@@ -301,6 +301,15 @@ public class DoubleList<T> implements ListInterface<T> {
 	public void updateData(T value, int id) {
 		Node p = searchNode(id);
 		p.data = value;
+	}
+
+	@Override
+	public int peekLastId() {
+		if (tail != null) {
+			return tail.id;
+		} else {
+			return -1;
+		}
 	}
 
 }

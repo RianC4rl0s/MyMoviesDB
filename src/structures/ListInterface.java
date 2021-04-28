@@ -22,4 +22,5 @@ public interface ListInterface <T> {
 	T removeLast();
 	T remove(int id);
 	
+	int peekLastId();
 }

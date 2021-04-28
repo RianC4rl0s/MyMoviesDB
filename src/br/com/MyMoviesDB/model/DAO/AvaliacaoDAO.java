@@ -30,18 +30,18 @@ public class AvaliacaoDAO implements BaseInterDAO<ListInterface<Object>>{
 		file.createNewFile();
 
 		ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(file));
-/*<<<<<<< HEAD
-
-		for (int i = 1; i <= list.getSize(); i++) {
-			objOutput.writeObject(list.search(i));
-=======*/
 		
-		for (int i = 0; i < list.getSize();i++) {
-			Object obj = list.search(i);
-			if (obj != null) {
-				objOutput.writeObject(obj);
+		int lastId = list.peekLastId();
+
+		if (lastId > 0) {
+			for (int i = 1; i <= lastId; i++) {
+				Object obj = list.search(i);
+				if (obj != null) {
+					objOutput.writeObject(obj);
+				}
 			}
-//>>>>>>> aac2588f1f03bab22bb22368cfac7172a4e2fbd2
+		} else {
+			System.out.println("ERR: Lista Vazia");
 		}
 
 		objOutput.close();
@@ -60,7 +60,7 @@ public class AvaliacaoDAO implements BaseInterDAO<ListInterface<Object>>{
 
 			try {
 				while ((x = objInput.readObject()) != null) {
-					list.addFirst(x);
+					list.addLast(x);
 				}
 			} catch (EOFException e) {
 				//System.out.println("Lista completamente lida!");
