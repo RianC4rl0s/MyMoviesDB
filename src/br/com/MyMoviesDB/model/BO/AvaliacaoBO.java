@@ -5,8 +5,6 @@ import java.io.IOException;
 import br.com.MyMoviesDB.model.DAO.AvaliacaoDAO;
 import br.com.MyMoviesDB.model.DAO.BaseInterDAO;
 import br.com.MyMoviesDB.model.VO.AvaliacaoVO;
-import br.com.MyMoviesDB.model.VO.AvaliadorVO;
-import br.com.MyMoviesDB.model.VO.FilmeVO;
 import structures.DoubleList;
 import structures.ListInterface;
 
