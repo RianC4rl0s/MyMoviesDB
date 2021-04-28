@@ -36,13 +36,12 @@ public class AvaliadorBO implements BaseInterBO<AvaliadorVO> {
 			if ((obj.getName() != null || obj.getName().equals("")) && obj.getAge() >= 0) {
 				if (evaluators.peekFirst() == null) {
 					obj.setKey(1);
-					evaluators.addLast(obj);
 				} else {
 					AvaliadorVO last = (AvaliadorVO) evaluators.peekLast(); // Pegando o último para incrementar a chave
 					obj.setKey(last.getKey() + 1);
-
-					evaluators.addLast(obj);
 				}
+
+				evaluators.addLast(obj);
 
 				try {
 					dao.writer(evaluators);
@@ -63,11 +62,11 @@ public class AvaliadorBO implements BaseInterBO<AvaliadorVO> {
 	public void update(AvaliadorVO obj, int id) {
 
 		AvaliadorVO updated = (AvaliadorVO) evaluators.search(id);
-		
+
 		if (obj != null) {
 			if (updated != null) {
 				if ((obj.getName() != null || obj.getName().equals("")) && obj.getAge() >= 0) {
-					obj.setKey(updated.getKey());	// Ao atualizar, fica com a mesma key
+					obj.setKey(updated.getKey()); // Ao atualizar, fica com a mesma key
 					evaluators.updateData(obj, id);
 
 					try {
@@ -109,7 +108,7 @@ public class AvaliadorBO implements BaseInterBO<AvaliadorVO> {
 
 	@Override
 	public AvaliadorVO search(int id) {
-		
+
 		AvaliadorVO evaluator = (AvaliadorVO) evaluators.search(id);
 
 		if (evaluator != null) {
@@ -117,7 +116,28 @@ public class AvaliadorBO implements BaseInterBO<AvaliadorVO> {
 		} else {
 			return null;
 		}
-		
+
+	}
+
+	// Método que procura pela chave do avaliador e retorna true se encontrar
+	public AvaliadorVO searchByKey(int key) {
+		int lastId = evaluators.peekLastId();
+
+		if (lastId > 0) {
+			for (int i = 1; i <= lastId; i++) {
+				AvaliadorVO obj = (AvaliadorVO) evaluators.search(i);
+				if (obj != null) {
+					if (obj.getKey() == key) {
+						return obj;
+					}
+				}
+			}
+		} else {
+			System.out.println("ERR: Lista Vazia");
+			return null;
+		}
+
+		return null;
 	}
 
 	@Override

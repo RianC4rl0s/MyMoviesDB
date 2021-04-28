@@ -8,50 +8,47 @@ import br.com.MyMoviesDB.model.VO.AvaliacaoVO;
 import structures.DoubleList;
 import structures.ListInterface;
 
-public class AvaliacaoBO implements BaseInterBO<AvaliacaoVO>{
+public class AvaliacaoBO implements BaseInterBO<AvaliacaoVO> {
 	BaseInterDAO<ListInterface<Object>> dao;
 	ListInterface<Object> ratings;
 
-	
 	public AvaliacaoBO() {
 		dao = new AvaliacaoDAO();
-		
+
 		try {
 			ratings = dao.reader();
-		}catch(ClassNotFoundException e){
+		} catch (ClassNotFoundException e) {
 			ratings = new DoubleList<Object>();
 			e.printStackTrace();
-		}catch(IOException e) {
+		} catch (IOException e) {
 			ratings = new DoubleList<Object>();
 			e.printStackTrace();
-			
+
 		}
 	}
-	
+
 	public void create(AvaliacaoVO avaliacao) {
-		if(avaliacao != null) {
+		if (avaliacao != null) {
 
 			ratings.addLast(avaliacao);
 			try {
 				dao.writer(ratings);
-				System.out.println("Nova critica adicionaca com sucesso!!!");
+				System.out.println("Nova critica adicionada com sucesso!!!");
 			} catch (IOException e) {
 				e.printStackTrace();
-				
-			}	
 
-		}else {
+			}
+
+		} else {
 			System.out.println("Não foi possivel adicionar o objeto, pois o mesmo esta vazio.");
 		}
-		
-		
-		
-		
+
 	}
-	public void update(AvaliacaoVO a,int id){
-		
-		if(a != null) {
-			if(ratings.search(id)!= null) {
+
+	public void update(AvaliacaoVO a, int id) {
+
+		if (a != null) {
+			if (ratings.search(id) != null) {
 				ratings.updateData(a, id);
 				try {
 					dao.writer(ratings);
@@ -60,21 +57,22 @@ public class AvaliacaoBO implements BaseInterBO<AvaliacaoVO>{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println("Critica não eiste");
+				System.out.println("Critica não existe");
 			}
-		}else {
+		} else {
 			System.out.println("A critica editada é invalida");
 		}
-	
-	
+
 	}
+
 	public void read() {
 		ratings.show();
 	}
+
 	public void delete(int id) {
-		if(ratings.search(id) != null) {
+		if (ratings.search(id) != null) {
 			ratings.remove(id);
-			
+
 			try {
 				dao.writer(ratings);
 				System.out.println("Critica deletada");
@@ -83,19 +81,21 @@ public class AvaliacaoBO implements BaseInterBO<AvaliacaoVO>{
 			}
 		}
 	}
+
 	public AvaliacaoVO search(int id) {
 		AvaliacaoVO a = (AvaliacaoVO) ratings.search(id);
-		if(a != null) {
+		if (a != null) {
 			return a;
-		}else {
+		} else {
 			return null;
 		}
 	}
-	public ListInterface<Object> searchByMovie(String movie){
-	
+
+	public ListInterface<Object> searchByMovie(String movie) {
+
 		ListInterface<Object> list = new DoubleList<Object>();
-	
+
 		return list;
 	}
-	
+
 }

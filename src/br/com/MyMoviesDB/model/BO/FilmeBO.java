@@ -33,6 +33,13 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 
 		if (obj != null) {
 			if (obj.getTitle() != null) {
+				if (movies.peekFirst() == null) {
+					obj.setKey(1);
+				} else {
+					FilmeVO last = (FilmeVO) movies.peekLast(); // Pegando o último para incrementar a chave
+					obj.setKey(last.getKey() + 1);
+				}
+
 				movies.addLast(obj);
 				try {
 					dao.writer(movies);
@@ -100,24 +107,69 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 
 	@Override
 	public FilmeVO search(int id) {
-		
+
 		FilmeVO movie = (FilmeVO) movies.search(id);
-		
+
 		if (movie != null) {
 			return movie;
 		} else {
 			return null;
 		}
-		
+
 	}
-	public ListInterface<Object> searchByName(String name){
-		ListInterface<Object> list = new DoubleList<Object>();
-			for(int i = 0; i < movies.getSize();i++) {
-				FilmeVO movie = (FilmeVO) movies.search(i);
-				if( movie.getTitle().contains(name)){
-					list.addLast(movie);
+
+	// Método que procura pela chave do filme e o retorna se encontrar
+	public FilmeVO searchByKey(int key) {
+		int lastId = movies.peekLastId();
+
+		if (lastId > 0) {
+			for (int i = 1; i <= lastId; i++) {
+				FilmeVO obj = (FilmeVO) movies.search(i);
+				if (obj != null) {
+					if (obj.getKey() == key) {
+						return obj;
+					}
 				}
 			}
+		} else {
+			System.out.println("ERR: Lista Vazia");
+			return null;
+		}
+
+		return null;
+	}
+
+	// Método que procura pela chave do filme e retorna o id dele na lista
+	public int searchId(int key) {
+		int lastId = movies.peekLastId();
+
+		if (lastId > 0) {
+			for (int i = 1; i <= lastId; i++) {
+				FilmeVO obj = (FilmeVO) movies.search(i);
+				if (obj != null) {
+					if (obj.getKey() == key) {
+						return i;
+					} else {
+						return -1;
+					}
+				}
+			}
+		} else {
+			System.out.println("ERR: Lista Vazia");
+			return -1;
+		}
+
+		return -1;
+	}
+
+	public ListInterface<Object> searchByName(String name) {
+		ListInterface<Object> list = new DoubleList<Object>();
+		for (int i = 0; i < movies.getSize(); i++) {
+			FilmeVO movie = (FilmeVO) movies.search(i);
+			if (movie.getTitle().contains(name)) {
+				list.addLast(movie);
+			}
+		}
 		return list;
 	}
 }

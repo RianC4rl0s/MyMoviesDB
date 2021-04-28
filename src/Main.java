@@ -16,9 +16,9 @@ public class Main {
 		int opc = 0;
 		Scanner cin = new Scanner(System.in);
 
-		BaseInterBO<FilmeVO> filmeBO = new FilmeBO();
 		BaseInterBO<AvaliacaoVO> avaliacaoBO = new AvaliacaoBO();
-		BaseInterBO<AvaliadorVO> avaliadorBO = new AvaliadorBO();
+		AvaliadorBO avaliadorBO = new AvaliadorBO();
+		FilmeBO filmeBO = new FilmeBO();
 
 		do {
 
@@ -33,9 +33,9 @@ public class Main {
 			opc = cin.nextInt();
 
 			switch (opc) {
-			//=====================================================
-			//FILME
-			//=====================================================
+			// =====================================================
+			// FILME
+			// =====================================================
 			case 1: {
 
 				int opcF;
@@ -81,7 +81,7 @@ public class Main {
 					filmeBO.create(movie);
 
 					System.out.println();
-					
+
 					break;
 				}
 
@@ -124,7 +124,7 @@ public class Main {
 						System.out.println("Filme não encontrado!");
 						System.out.println();
 					}
-					
+
 					break;
 				}
 
@@ -152,7 +152,7 @@ public class Main {
 						System.out.println("Filme não encontrado!");
 						System.out.println();
 					}
-					
+
 					break;
 				}
 
@@ -162,7 +162,7 @@ public class Main {
 					System.out.println("= LISTAR FILME =");
 					filmeBO.read();
 					System.out.println();
-					
+
 					break;
 				}
 
@@ -172,12 +172,12 @@ public class Main {
 				}
 
 				}
-				
+
 				break;
 			}
-			//======================================================
-			//AVALIADORES
-			//======================================================
+			// ======================================================
+			// AVALIADORES
+			// ======================================================
 			case 2: {
 
 				int opcF;
@@ -296,12 +296,12 @@ public class Main {
 				}
 
 				break;
-			}		
-			//======================================================
-			//AVALIAÇÕES
-			//======================================================
-			case 3:{
-			
+			}
+			// ======================================================
+			// AVALIAÇÕES
+			// ======================================================
+			case 3: {
+
 				int opcF;
 				System.out.println();
 				System.out.println("======= Avaliações =======");
@@ -316,175 +316,200 @@ public class Main {
 				switch (opcF) {
 				case 1: {
 					System.out.println();
-					System.out.println("= Avaliar =");
+					System.out.println("= AVALIAR =");
 					AvaliacaoVO avaliacao = new AvaliacaoVO();
-					
+
+					filmeBO.read();
+
 					System.out.println("Digite o id do filme desejado");
-					
+
 					int movieID = cin.nextInt();
-					if(filmeBO.search(movieID) != null) {
-						
-						avaliacao.setMovie(movieID);
+					FilmeVO movie = filmeBO.search(movieID);
+
+					if (movie != null) {
+
+						avaliacao.setMovie(movie.getKey());
 						cin.nextLine();
-						
+
 						System.out.println("Digite sua critica: ");
 						avaliacao.setCriticism(cin.nextLine());
-						
-						
 						avaliacao.setDate(Calendar.getInstance());
+
 						System.out.println("Digite a nota do filme(0-10): ");
 						double evaluate = cin.nextDouble();
-						while(evaluate >10 || evaluate <0 ) {
-							System.out.println("Digite a nota do filme(0-10): ");
-							evaluate = cin.nextDouble();
-						}
+
 						avaliacao.setEvaluation(evaluate);
-						
-						FilmeVO m = filmeBO.search(movieID);
-						String ge = m.getGeneralEvaluation();
-						
-						if(ge.matches("N/A")) {
-							m.setGeneralEvaluation( Double.toString( evaluate));
-							filmeBO.update(m, movieID);
-						}else {
-							ge = Double.toString((Double.parseDouble(ge) + evaluate)/2);
-							m.setGeneralEvaluation(ge);
-							filmeBO.update(m, movieID);
+
+						String generalEvaluation = movie.getGeneralEvaluation();
+						int oldEvaluationQt = movie.getEvaluationQt();
+						int evaluationQt = oldEvaluationQt + 1;
+
+						if (generalEvaluation.matches("N/A")) {
+							movie.setGeneralEvaluation(Double.toString(evaluate));
+						} else {
+							double avarage = (Double.parseDouble(generalEvaluation) * oldEvaluationQt / evaluationQt)
+									+ (evaluate / evaluationQt);
+							generalEvaluation = Double.toString(avarage);
+							movie.setGeneralEvaluation(generalEvaluation);
 						}
-						System.out.println("Digite seu id de valiador: ");
-						Long idAvaliador = cin.nextLong();
-						int i =1;
-						while(avaliadorBO.search(i)!= null){
-							if(avaliadorBO.search(i).getKey() == idAvaliador){
-								avaliacao.setEvaluator(avaliadorBO.search(i).getKey());
-								break;
-							}else {
-								i++;
-							}
+
+						avaliacao.setOldEvaluationQt(oldEvaluationQt); // Salvando a quantidade de avalições que havia
+																		// antes para operações futuras
+						movie.setEvaluationQt(evaluationQt);
+
+						System.out.println("Digite sua chave de avaliador: ");
+						int evaluatorKey = cin.nextInt();
+
+						if (avaliadorBO.searchByKey(evaluatorKey) != null) {
+							avaliacao.setEvaluator(evaluatorKey);
+							filmeBO.update(movie, movieID);
+							avaliacaoBO.create(avaliacao);
+						} else {
+							System.out.println("ERR: Avaliador Inválido");
 						}
-						
-						
-						avaliacaoBO.create(avaliacao);
-						
-					}else {
-						System.out.println("Filme não encontrado!");
+
+					} else {
+						System.out.println("ERR: Filme não encontrado!");
 						System.out.println();
 					}
-					
+
 					break;
-				}case 2: {
+				}
+				case 2: {
 					System.out.println();
-					System.out.println("========== EDITAR AVALIAÇÂO =========");
-					AvaliacaoVO avaliacao = new AvaliacaoVO();
-					
-					
-						System.out.println("Digite a avaliação a ser editada: ");
-						int avaliacaoID = cin.nextInt();
-						cin.nextLine();
-						if(avaliacaoBO.search(avaliacaoID) != null) {
-							
-								int movieID = avaliacaoBO.search(avaliacaoID).getMovie();
-								cin.nextLine();
-								char confirmar;
-								
-								System.out.println("Deseja editar critica? Sim(s), Não(Qualquer tecla)");
-								confirmar = cin.next().charAt(0);
-								if(confirmar == 'S' || confirmar =='s') {
-									System.out.println("Digite sua critica: ");
-									avaliacao.setCriticism(cin.nextLine());
-								}
-								
-								//avaliacao.setDate(Calendar.getInstance());
-								
-								System.out.println("Deseja editar a nota? Sim(s), Não(Qualquer tecla)");
-								confirmar = cin.next().charAt(0);
-								if(confirmar == 'S' || confirmar =='s') {
-									
-									System.out.println("Digite a nota do filme(0-10): ");
-									double evaluate = cin.nextDouble();
-									while(evaluate >10 || evaluate <0 ) {
-										System.out.println("Digite a nota do filme(0-10): ");
-										evaluate = cin.nextDouble();
-									}
-										avaliacao.setEvaluation(evaluate);
-										
-										FilmeVO m = filmeBO.search(movieID);
-										String ge = m.getGeneralEvaluation();
-										
-										if(ge.matches("N/A")) {
-											m.setGeneralEvaluation( Double.toString( evaluate));
-											filmeBO.update(m, movieID);
-										}else {
-											ge = Double.toString((Double.parseDouble(ge) + evaluate)/2);
-											m.setGeneralEvaluation(ge);
-											filmeBO.update(m, movieID);
-										}
-								
-										System.out.println("Digite seu id de valiador: ");
-										Long idAvaliador = cin.nextLong();
-										int i =1;
-										while(avaliadorBO.search(i)!= null){
-											if(avaliadorBO.search(i).getKey() == idAvaliador){
-												avaliacao.setEvaluator(avaliadorBO.search(i).getKey());
-												break;
-											}else {
-												i++;
-											}
-										}
-									
-									avaliacaoBO.create(avaliacao);
-								}
-							
-						
-						
-					}else {
+					System.out.println("= EDITAR AVALIAÇÂO =");
+
+					AvaliacaoVO avaliacao;
+
+					avaliacaoBO.read();
+
+					System.out.println("Digite o id da avaliação a ser editada: ");
+					int avaliacaoID = cin.nextInt();
+					cin.nextLine();
+
+					avaliacao = avaliacaoBO.search(avaliacaoID);
+
+					if (avaliacao != null) {
+
+						int movieKey = avaliacao.getMovie();
+						FilmeVO movie = filmeBO.searchByKey(movieKey);
+						int evaluationQt = movie.getEvaluationQt();
+						char confirmar;
+
+						System.out.println("Deseja editar critica? Sim(s), Não(Qualquer tecla)");
+						confirmar = cin.next().charAt(0);
+						if (confirmar == 'S' || confirmar == 's') {
+							System.out.println("Digite sua critica: ");
+							avaliacao.setCriticism(cin.nextLine());
+						}
+
+						// avaliacao.setDate(Calendar.getInstance());
+
+						System.out.println("Deseja editar a nota? Sim(s), Não(Qualquer tecla)");
+						confirmar = cin.next().charAt(0);
+
+						if (confirmar == 'S' || confirmar == 's') {
+
+							System.out.println("Digite a nota do filme(0-10): ");
+							double evaluate = cin.nextDouble();
+							avaliacao.setEvaluation(evaluate);
+
+							String generalEvaluation = movie.getGeneralEvaluation();
+
+							// Restaurando valor da avaliação geral do filme com a fórmula:
+							// ((avaliaçãoGeral * quantidadeAvaliações) - últimaAvaliacao) /
+							// quantidadeAntigaAvaliações
+							double oldGeneralEvaluation = ((Double.parseDouble(generalEvaluation) * evaluationQt)
+									- avaliacao.getEvaluation()) / avaliacao.getOldEvaluationQt();
+
+							double avarage = (oldGeneralEvaluation * avaliacao.getOldEvaluationQt() / evaluationQt)
+									+ (evaluate / evaluationQt); // Gerando novo valor
+							generalEvaluation = Double.toString(avarage);
+							movie.setGeneralEvaluation(generalEvaluation);
+
+							movie.setEvaluationQt(evaluationQt);
+
+							System.out.println("Digite seu id de valiador: ");
+							int evaluatorKey = cin.nextInt();
+
+							if (avaliadorBO.searchByKey(evaluatorKey) != null) {
+								avaliacao.setEvaluator(evaluatorKey);
+								filmeBO.update(movie, filmeBO.searchId(movieKey));
+								avaliacaoBO.create(avaliacao);
+							} else {
+								System.out.println("ERR: Avaliador Inválido");
+							}
+						}
+
+					} else {
 						System.out.println("Avaliação não encontrada!");
 						System.out.println();
 					}
-					
+
 					break;
 				}
-				case 3:{
+				case 3: {
 					System.out.println();
 					System.out.println("= DELETAR AVALIAÇÃO =");
+
+					avaliacaoBO.read();
+
 					System.out.println("Digite o id da avaliação a ser deletada");
 					int avaliacaoID = cin.nextInt();
 					cin.nextLine();
-					if(avaliacaoBO.search(avaliacaoID) != null) {
+
+					AvaliacaoVO avaliacao = avaliacaoBO.search(avaliacaoID);
+
+					if (avaliacao != null) {
 						System.out.println("Realmente deseja apagar a avaliação: Sim(s), Não(qualquer valor)");
 						char confirm = cin.next().charAt(0);
-						if(confirm == 'S' || confirm == 's') {
+
+						if (confirm == 'S' || confirm == 's') {
+
+							// Pegando informações do filme daquela avaliação para restaurar a nota geral
+							int movieKey = avaliacao.getMovie();
+							FilmeVO movie = filmeBO.searchByKey(movieKey);
+							String generalEvaluation = movie.getGeneralEvaluation();
+							int evaluationQt = movie.getEvaluationQt();
+
+							double oldGeneralEvaluation = ((Double.parseDouble(generalEvaluation) * evaluationQt)
+									- avaliacao.getEvaluation()) / avaliacao.getOldEvaluationQt();
+
 							avaliacaoBO.delete(avaliacaoID);
-						}else {
+
+							movie.setGeneralEvaluation(Double.toString(oldGeneralEvaluation));
+							movie.setEvaluationQt(evaluationQt - 1); // Diminuindo quantidade de avaliações do filme
+							filmeBO.update(movie, filmeBO.searchId(movieKey));
+
+						} else {
 							System.out.println("Operação cancelada");
 						}
-						
-					}else {
-						System.out.println("Id de valiação invalido");
+
+					} else {
+						System.out.println("ERR: Id de valiação invalido");
 					}
-					
-					
+
 					break;
 				}
-				case 4:{
+				case 4: {
 					System.out.println();
 					System.out.println("= LISTAR AVALIAÇÕES =");
-					
+
 					avaliacaoBO.read();
+
 					System.out.println();
 					break;
 				}
 				default:
-					System.out.println("Opção invalida!!!");
+					System.out.println("ERR: Opção invalida!!!");
 				}
 				break;
 			}
-			
-			
+
 			case 5: {
 				System.out.println("Operação finalizada!");
 				System.out.println();
-				
+
 				break;
 			}
 

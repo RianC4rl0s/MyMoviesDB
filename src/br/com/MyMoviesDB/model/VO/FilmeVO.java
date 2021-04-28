@@ -2,18 +2,19 @@ package br.com.MyMoviesDB.model.VO;
 
 import java.io.Serializable;
 
-public class FilmeVO implements Serializable{
+public class FilmeVO implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3701530536791407915L;
-	
-	
+
+	private int key;
 	private String title, genre, durationTime, director, description;
 	private int year;
 	private int ageRange;
 	private String generalEvaluation;
+	private int evaluationQt = 0;
 
 	public String getTitle() {
 		return title;
@@ -82,7 +83,23 @@ public class FilmeVO implements Serializable{
 	@Override
 	public String toString() {
 		return "[Título = " + title + ", " + "Diretor = " + director + ", " + "Descrição = " + description + ", "
-				+ "Nota Geral = " + generalEvaluation + "]";
+				+ "Nota Geral = " + generalEvaluation + ", Key = " + key + "]";
+	}
+
+	public int getKey() {
+		return key;
+	}
+
+	public void setKey(int key) {
+		this.key = key;
+	}
+
+	public int getEvaluationQt() {
+		return evaluationQt;
+	}
+
+	public void setEvaluationQt(int evaluationQt) {
+		this.evaluationQt = evaluationQt;
 	}
 
 }

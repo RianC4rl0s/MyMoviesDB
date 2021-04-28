@@ -9,7 +9,7 @@ public class AvaliadorVO implements Serializable{
 	 */
 	private static final long serialVersionUID = 5081678849308500358L;
 	
-	private long key;
+	private int key;
 	private String name;
 	private int age;
 
@@ -34,11 +34,11 @@ public class AvaliadorVO implements Serializable{
 		return "[" + name + ", key = " + key + "]";
 	}
 
-	public long getKey() {
+	public int getKey() {
 		return key;
 	}
 
-	public void setKey(long key) {
+	public void setKey(int key) {
 		this.key = key;
 	}
 

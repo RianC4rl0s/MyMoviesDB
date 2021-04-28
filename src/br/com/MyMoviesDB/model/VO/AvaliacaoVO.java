@@ -4,30 +4,28 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-//import br.com.MyMoviesDB.model.BO.AvaliacaoBO;
 import br.com.MyMoviesDB.model.BO.AvaliadorBO;
-import br.com.MyMoviesDB.model.BO.BaseInterBO;
 import br.com.MyMoviesDB.model.BO.FilmeBO;
 
-public class AvaliacaoVO implements Serializable {
-
+public class AvaliacaoVO implements Serializable {	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3257722554720400018L;
+	private static final long serialVersionUID = 3257722554720400018L;
 	
-	private Long evaluatorID;
 	private Calendar date;
 	private double evaluation;
 	private String criticism;
-	private int movieID;
+	private int movieKey;
+	private int evaluatorKey;
+	private int oldEvaluationQt;
 
 	public long getEvaluator() {
-		return evaluatorID;
+		return evaluatorKey;
 	}
 
-	public void setEvaluator(Long evaluator) {
-		this.evaluatorID = evaluator;
+	public void setEvaluator(int evaluator) {
+		this.evaluatorKey = evaluator;
 	}
 
 	public Calendar getDate() {
@@ -55,28 +53,27 @@ public class AvaliacaoVO implements Serializable {
 	}
 
 	public int getMovie() {
-		return movieID;
+		return movieKey;
 	}
 
 	public void setMovie(int movie) {
-		this.movieID = movie;
+		this.movieKey = movie;
 	}
 
 	@Override
 	public String toString() {
-		FilmeVO movie  = new FilmeBO().search(this.movieID); 
-		int i = 1;
-		BaseInterBO<AvaliadorVO> avaliadorBO = new AvaliadorBO();
-		AvaliadorVO avaliador = new AvaliadorVO();
-		while(avaliadorBO.search(i) != null) {
-			if(avaliadorBO.search(i).getKey() == this.evaluatorID) {
-				avaliador = avaliadorBO.search(i);			
-			}else {
-				i++;
-			}
-		}
-		return "AvaliacaoVO [Avaliador = " + avaliador + ", Data = " +  new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(date.getTime())+ ", Nota = " + evaluation + ", Crítica = "
+		FilmeVO movie  = new FilmeBO().searchByKey(this.movieKey); 
+		AvaliadorVO avaliador = new AvaliadorBO().searchByKey(this.evaluatorKey);
+		return "[Avaliador = " + avaliador + ", Data = " +  new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(date.getTime())+ ", Nota = " + evaluation + ", Crítica = "
 				+ criticism + ", Filme = " + movie.toString() + "]";
+	}
+
+	public int getOldEvaluationQt() {
+		return oldEvaluationQt;
+	}
+
+	public void setOldEvaluationQt(int oldEvaluationQt) {
+		this.oldEvaluationQt = oldEvaluationQt;
 	}
 
 }
