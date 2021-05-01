@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import br.com.MyMoviesDB.model.DAO.BaseInterDAO;
 import br.com.MyMoviesDB.model.DAO.ListaFilmesDAO;
+import br.com.MyMoviesDB.model.VO.FilmeVO;
 import br.com.MyMoviesDB.model.VO.ListaFilmesVO;
 import structures.DoubleList;
 import structures.ListInterface;
+import structures.QueueInterface;
 
 public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 	BaseInterDAO<ListInterface<Object>> dao;
@@ -27,37 +29,57 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 	}
 	
 	public void create(ListaFilmesVO lm) {
-		if(lm != null) {
-			movieList.addLast(lm);
-			try {
-				dao.writer(movieList);
-				System.out.println("Nova lista criada com sucesso");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		System.out.println("ENtrou na criação de nova lista");
+		if (lm != null) {
+			if (lm.getName() != null) {
+				if (movieList.peekFirst() == null) {
+					lm.setKey(1);
+				} else {
+					FilmeVO last = (FilmeVO) movieList.peekLast(); // Pegando o último para incrementar a chave
+					lm.setKey(last.getKey() + 1);
+				}
+				System.out.println("ADD na lista");
+				movieList.addLast(lm);
+				try {
+					System.out.println("Pronto para escrever no arquivo");
+					movieList.show();
+					dao.writer(movieList);
+					System.out.println("Lista Cadastrada");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("ERR: Nome inválido");
 			}
-		}else {
-			System.out.println("Não foi possivel adicionar o objeto, pois o mesmo esta vazio.");
+		} else {
+			System.out.println("ERR: Objeto inválido");
 		}
+
 	}
 	
 	public void update(ListaFilmesVO lm, int id) {
 		if(lm != null) {
-			if(movieList.search(id)!= null) {
-				movieList.updateData(lm, id);
-				try {
-					dao.writer(movieList);
-					System.out.println("Editado");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			if(lm.getName()!= null) {
+				if(movieList.search(id)!= null) {
+					movieList.updateData(lm, id);
+					try {
+						dao.writer(movieList);
+						System.out.println("Editado");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				} else {
+					System.out.println("ERR: Nome inválido");
 				}
-				System.out.println("Lista não eiste");
+			} else {
+				System.out.println("ERR: Objeto não exite");
 			}
-		}else {
-			System.out.println("A Lista editada é invalida");
+		} else {
+			System.out.println("ERR: Objeto inválido");
 		}
-	
+
 	}
 	public void read() {
 		movieList.show();
@@ -72,7 +94,10 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 			} catch (IOException e) {
 				System.out.println("A lista nao existe!!!");
 			}
+		}else {
+			System.out.println("ERR: Objeto não existe");
 		}
+
 	}
 	public ListaFilmesVO search(int id) {
 		ListaFilmesVO lm = (ListaFilmesVO) movieList.search(id);
@@ -82,12 +107,86 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 			return null;
 		}
 	}
-	public void addNovoFilme(int id) {
+	//ACHO Q TA ERRADO
+	public void addMovieToList(long lsID,int movieID) {
+		if(movieList.search((int)lsID)!= null){
+			if(new FilmeBO().search(movieID) != null) {
+			
+				ListaFilmesVO temp =(ListaFilmesVO)movieList.search((int)lsID);
+				QueueInterface<Integer> l =  temp.getMovieList();
+				
+				l.add(movieID);
+				
+				temp.setMovieList(l);
+				
+				movieList.updateData(temp, (int)lsID);
+				System.out.println("Filme adiciona a lista!!");
+			}else {
+				System.out.println("Não foi póssivel encontrar o filme");
+			}
+		}else {
+			System.out.println("Lista não encontrada");
+		}
+		
 		
 	}
-	
-	
-	
-	
-	
+	public void removeMovieFromList(long lsID)  {
+		if(movieList.search((int)lsID)!= null){
+			
+				ListaFilmesVO temp =(ListaFilmesVO)movieList.search((int)lsID);
+				QueueInterface<Integer> l =  temp.getMovieList();
+				
+				l.remove();
+				
+				temp.setMovieList(l);
+				
+				movieList.updateData(temp, (int)lsID);
+				System.out.println("Filme removido da lista!!");
+		}else {
+			System.out.println("Lista não encontrada");
+		}
+		
+		
+	}
+	public ListaFilmesVO searchByKey(long key) {
+		int lastId = movieList.peekLastId();
+
+		if (lastId > 0) {
+			for (int i = 1; i <= lastId; i++) {
+				ListaFilmesVO obj = (ListaFilmesVO) movieList.search(i);
+				if (obj != null) {
+					if (obj.getKey() == key) {
+						return obj;
+					}
+				}
+			}
+		} else {
+			System.out.println("ERR: Lista Vazia");
+			return null;
+		}
+
+		return null;
+	}
+	public int searchId(int key) {
+		int lastId = movieList.peekLastId();
+
+		if (lastId > 0) {
+			for (int i = 1; i <= lastId; i++) {
+				ListaFilmesVO obj = (ListaFilmesVO) movieList.search(i);
+				if (obj != null) {
+					if (obj.getKey() == key) {
+						return i;
+					} else {
+						return -1;
+					}
+				}
+			}
+		} else {
+			System.out.println("ERR: Lista Vazia");
+			return -1;
+		}
+
+		return -1;
+	}
+
 }

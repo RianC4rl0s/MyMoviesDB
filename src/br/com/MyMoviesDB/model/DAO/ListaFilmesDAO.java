@@ -13,6 +13,8 @@ import structures.DoubleList;
 import structures.ListInterface;
 
 public class ListaFilmesDAO  implements BaseInterDAO<ListInterface<Object>>{
+	
+	@Override
 	public void writer(ListInterface<Object> list) throws IOException {
 
 		File file = new File("data/ListaFilmes.bin");
@@ -20,7 +22,7 @@ public class ListaFilmesDAO  implements BaseInterDAO<ListInterface<Object>>{
 		file.createNewFile();
 
 		ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(file));
-		
+
 		int lastId = list.peekLastId();
 
 		if (lastId > 0) {
@@ -33,13 +35,12 @@ public class ListaFilmesDAO  implements BaseInterDAO<ListInterface<Object>>{
 		} else {
 			System.out.println("ERR: Lista Vazia");
 		}
-
 		objOutput.close();
 	}
 	@Override
 	public ListInterface<Object> reader() throws IOException, ClassNotFoundException {
 
-		ListInterface<Object> list = new DoubleList<Object>();
+		ListInterface<Object> lista = new DoubleList<Object>();
 
 		File file = new File("data/ListaFilmes.bin");
 
@@ -50,7 +51,7 @@ public class ListaFilmesDAO  implements BaseInterDAO<ListInterface<Object>>{
 
 			try {
 				while ((x = objInput.readObject()) != null) {
-					list.addLast(x);
+					lista.addLast(x);
 				}
 			} catch (EOFException e) {
 				//System.out.println("Lista completamente lida!");
@@ -59,6 +60,6 @@ public class ListaFilmesDAO  implements BaseInterDAO<ListInterface<Object>>{
 			objInput.close();
 		}
 
-		return list;
+		return lista;
 	}
 }

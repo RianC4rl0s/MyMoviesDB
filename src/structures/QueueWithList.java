@@ -1,9 +1,16 @@
 package structures;
 
+import java.io.Serializable;
+
 import exception.MyException;
 
-public class QueueWithList <T> implements QueueInterface <T>{
+public class QueueWithList <T> implements QueueInterface <T>,Serializable{
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -604715618250021992L;
 	private ListInterface<Object> array;
 	int first;
 	int last;
