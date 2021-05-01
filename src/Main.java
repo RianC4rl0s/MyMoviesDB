@@ -549,10 +549,12 @@ public class Main {
 							
 							System.out.println("Deseja adiconar mais um filme?SIM(s), Não(qualquer tecla)");
 							char confirm = cin.next().charAt(0);
+							cin.nextLine();
 							while(confirm == 'S' || confirm == 's') {
 								
+								System.out.println("Digite o key do filme");
 								int movieIDN = cin.nextInt();
-								cin.nextLine();
+								//cin.nextLine();
 								FilmeVO movieN = filmeBO.search(movieIDN);
 
 								 
@@ -564,8 +566,11 @@ public class Main {
 								
 								System.out.println("Deseja adiconar um filme?SIM(s), Não(qualquer tecla)");
 								confirm = cin.next().charAt(0);
+								cin.nextLine();
 							}
 							System.out.println("Pronto par cadastrar nova lista");
+							
+							listaFilmes.getMovieList().show();
 							listaFilmesBO.create(listaFilmes);
 							
 
@@ -621,8 +626,9 @@ public class Main {
 					ListaFilmesVO listFilme = listaFilmesBO.search(listID);
 					if(listFilme != null) {
 						listFilme.removeMovieFromList();
-						
+						System.out.println("Removido da lista");
 						listaFilmesBO.update(listFilme, listID);
+						
 					}else {
 						System.out.println("Lista não existe");
 					}

@@ -46,10 +46,16 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 		System.out.println("ENtrou na criação de nova lista");
 		if (lm != null) {
 			if (lm.getName() != null) {
+				System.out.println(lm.getName());
 				if (movieList.peekFirst() == null) {
 					lm.setKey(1);
+					
 				} else {
-					FilmeVO last = (FilmeVO) movieList.peekLast(); // Pegando o último para incrementar a chave
+					//System.out.println(movieList.peekLast());
+					ListaFilmesVO last = (ListaFilmesVO) movieList.peekLast(); // Pegando o último para incrementar a chave
+					
+					System.out.println(last);
+					
 					lm.setKey(last.getKey() + 1);
 				}
 				System.out.println("ADD na lista");
@@ -162,7 +168,7 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 					
 					if (lastIdQueue > 0) {
 						for (int j = 1; j <= lastIdQueue; j++) {
-							Integer inte = (Integer) list.search(i);
+							Integer inte = (Integer) list.search(j);
 							if (inte != null) {
 								FilmeVO movie = filmeBO.searchByKey(inte);
 								System.out.println(movie);
@@ -188,7 +194,7 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 	}
 	
 	//ACHO Q TA ERRADO
-	public void addMovieToList(long lsID,int movieID) {
+	/*public void addMovieToList(long lsID,int movieID) {
 		if(movieList.search((int)lsID)!= null){
 			if(new FilmeBO().search(movieID) != null) {
 			
@@ -229,7 +235,7 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 		
 		
 	}
-	
+	*/
 	public ListaFilmesVO searchByKey(long key) {
 		int lastId = movieList.peekLastId();
 
