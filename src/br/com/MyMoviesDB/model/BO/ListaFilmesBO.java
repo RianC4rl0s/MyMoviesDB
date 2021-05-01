@@ -2,7 +2,6 @@ package br.com.MyMoviesDB.model.BO;
 
 import java.io.IOException;
 
-import br.com.MyMoviesDB.model.DAO.BaseInterDAO;
 import br.com.MyMoviesDB.model.DAO.ListaFilmesDAO;
 import br.com.MyMoviesDB.model.VO.FilmeVO;
 import br.com.MyMoviesDB.model.VO.ListaFilmesVO;
@@ -11,19 +10,34 @@ import structures.ListInterface;
 import structures.QueueInterface;
 
 public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
-	BaseInterDAO<ListInterface<Object>> dao;
-	ListInterface<Object> movieList;
+	ListaFilmesDAO dao;
+	ListInterface<String> lists; // Mantendo o nome das listas de filmes
+	ListInterface<Object> movieList = new DoubleList<Object>();; // Mantendo a lista das listas de filmes
+	FilmeBO filmeBO = new FilmeBO();
+	
 	public ListaFilmesBO() {
-		dao = new ListaFilmesDAO();
-		
+		dao = new ListaFilmesDAO();		
 		
 		try {
-			movieList = dao.reader();
+			lists = dao.reader(); // Lendo o arquivo com os nomes das listas
+			
+			// Percorrendo o array com o nome das listas para ler no arquivo
+			// de cada uma e recuperar cada fila.
+			int lastId = lists.peekLastId();
+
+			if (lastId > 0) {
+				for (int i = 1; i <= lastId; i++) {
+					String name = lists.search(i);
+					if (name != null) {
+						movieList.addLast(dao.reader(name));
+					}
+				}
+			}			
 		}catch(ClassNotFoundException e) {
-			movieList = new DoubleList<Object>();
+			lists = new DoubleList<String>();
 			e.printStackTrace();
 		}catch(IOException e){
-			movieList = new DoubleList<Object>();
+			lists = new DoubleList<String>();
 			e.printStackTrace();
 		}
 	}
@@ -43,7 +57,12 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 				try {
 					System.out.println("Pronto para escrever no arquivo");
 					movieList.show();
-					dao.writer(movieList);
+					
+					// Adicionando o nome da nova lista no array das listas
+					lists.addLast(lm.getName());
+					
+					dao.writer(lists); // Escrevendo arquivos com nome das listas
+					dao.writer(lm);		// Escrevendo a lista em um arquivo com seu nome
 					System.out.println("Lista Cadastrada");
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -63,7 +82,7 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 				if(movieList.search(id)!= null) {
 					movieList.updateData(lm, id);
 					try {
-						dao.writer(movieList);
+						dao.writer(lm);
 						System.out.println("Editado");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -86,10 +105,33 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 	}
 	
 	public void delete(int id) {
-		if(movieList.search(id)!= null) {
-			movieList.remove(id);
+		ListaFilmesVO list = (ListaFilmesVO) movieList.search(id);
+		
+		if(list != null) {
 			try {
-				dao.writer(movieList);
+				// Removendo das listas de filmes
+				movieList.remove(id);
+				
+				
+				// Removendo o nome da lista de filmes da lista dos nomes
+				int lastId = lists.peekLastId();
+
+				// Abaixo estou percorrendo o array da lista de nomes
+				if (lastId > 0) {
+					for (int i = 1; i <= lastId; i++) {
+						String name = lists.search(i);
+						if (name != null && name.equals(list.getName())) {
+							lists.remove(i);
+						}
+					}
+				}			
+				
+				// Escrevendo arquivo de nomes
+				dao.writer(lists);
+				
+				// Deletando arquivo da lista de filmes
+				dao.delete(list.getName());
+				
 				System.out.println("Lista deletada");
 			} catch (IOException e) {
 				System.out.println("A lista nao existe!!!");
@@ -99,6 +141,43 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 		}
 
 	}
+	
+	public void show() {
+		
+		// Nesse método, tenho que percorrer primeiro a lista das listas de filmes e para cada
+		// lista de filmes, devo procurar por seus filmes.
+		int lastId = movieList.peekLastId();
+
+		if (lastId > 0) {
+			for (int i = 1; i <= lastId; i++) {
+		
+				ListaFilmesVO obj = (ListaFilmesVO) movieList.search(i);
+				
+				if (obj != null) {
+					System.out.println("Lista " + obj.getName());
+					QueueInterface<Integer> list = obj.getMovieList();
+					
+					// Aqui eu percorro a fila com os filmes 
+					int lastIdQueue = list.peekLastId();
+					
+					if (lastIdQueue > 0) {
+						for (int j = 1; j <= lastIdQueue; j++) {
+							Integer inte = (Integer) list.search(i);
+							if (inte != null) {
+								FilmeVO movie = filmeBO.searchByKey(inte);
+								System.out.println(movie);
+							}
+						}
+					} else {
+						System.out.println("Lista de filme vazia");
+					}					
+				}
+			}
+		} else {
+			System.out.println("Nenhuma lista de filmes");
+		}
+	}
+	
 	public ListaFilmesVO search(int id) {
 		ListaFilmesVO lm = (ListaFilmesVO) movieList.search(id);
 		if(lm != null){
@@ -107,6 +186,7 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 			return null;
 		}
 	}
+	
 	//ACHO Q TA ERRADO
 	public void addMovieToList(long lsID,int movieID) {
 		if(movieList.search((int)lsID)!= null){
@@ -130,6 +210,7 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 		
 		
 	}
+	
 	public void removeMovieFromList(long lsID)  {
 		if(movieList.search((int)lsID)!= null){
 			
@@ -148,6 +229,7 @@ public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 		
 		
 	}
+	
 	public ListaFilmesVO searchByKey(long key) {
 		int lastId = movieList.peekLastId();
 

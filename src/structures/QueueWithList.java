@@ -1,22 +1,15 @@
 package structures;
 
-import java.io.Serializable;
-
 import exception.MyException;
 
-public class QueueWithList <T> implements QueueInterface <T>,Serializable{
+public class QueueWithList <T> implements QueueInterface <T>{
 	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -604715618250021992L;
-	private ListInterface<Object> array;
+	private ListInterface<T> array;
 	int first;
 	int last;
 	
 	public QueueWithList() {
-		this.array = new DoubleList<Object>();
+		this.array = new DoubleList<T>();
 	}
 
 	@Override
@@ -27,7 +20,6 @@ public class QueueWithList <T> implements QueueInterface <T>,Serializable{
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public T remove() {
 		
 		T value;
@@ -45,7 +37,6 @@ public class QueueWithList <T> implements QueueInterface <T>,Serializable{
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public T peek() {
 		
 		T value;
@@ -83,5 +74,15 @@ public class QueueWithList <T> implements QueueInterface <T>,Serializable{
 		
 		array.show();
 		
+	}
+
+	@Override
+	public int peekLastId() {
+		return array.peekLastId();
+	}
+
+	@Override
+	public T search(int id) {
+		return array.search(id);
 	}
 }

@@ -3,8 +3,6 @@ package br.com.MyMoviesDB.model.VO;
 import java.io.Serializable;
 
 import br.com.MyMoviesDB.model.BO.FilmeBO;
-import br.com.MyMoviesDB.model.DAO.BaseInterDAO;
-import structures.ListInterface;
 import structures.QueueInterface;
 
 public class ListaFilmesVO implements Serializable{

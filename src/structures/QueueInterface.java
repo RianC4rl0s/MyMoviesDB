@@ -14,4 +14,7 @@ public interface QueueInterface <T> {
 	
 	void show();
 	
+	int peekLastId();
+	T search(int id);
+	
 }

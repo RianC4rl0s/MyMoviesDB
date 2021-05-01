@@ -611,7 +611,7 @@ public class Main {
 				case 3:{
 					
 					System.out.println();
-					System.out.println("=  Adicionar filme a lista =");
+					System.out.println("=  Remover filme a lista =");
 					System.out.println();
 					
 					listaFilmesBO.read();
@@ -633,7 +633,7 @@ public class Main {
 				
 				case 4:{
 					System.out.println();
-					System.out.println("= DELETAR LISTA DE FILMES=");
+					System.out.println("= DELETAR LISTA DE FILMES =");
 					
 					
 					System.out.println("Digite o id da lista a ser deletada");
@@ -647,7 +647,7 @@ public class Main {
 						char confirm = cin.next().charAt(0);
 
 						if (confirm == 'S' || confirm == 's') {
-						
+							listaFilmesBO.delete(lsID);
 						}
 					}
 					
@@ -655,13 +655,7 @@ public class Main {
 				}
 				
 				case 5:{
-					System.out.println("Listas disponiveis");
-					int aux =0;
-					while(listaFilmesBO != null) {
-						System.out.printf("id =" + aux + " ");
-						System.out.println(listaFilmesBO.search(aux).getName());
-
-					}
+					listaFilmesBO.show();
 					break;
 				}
 				default: {
