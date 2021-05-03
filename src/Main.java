@@ -24,7 +24,6 @@ public class Main {
 		Scanner cin = new Scanner(System.in);
 
 		AvaliacaoBO avaliacaoBO = new AvaliacaoBO();
-		//BaseInterBO<AvaliacaoVO> avaliacaoBO = new AvaliacaoBO();
 		AvaliadorBO avaliadorBO = new AvaliadorBO();
 		FilmeBO filmeBO = new FilmeBO();
 		ListaFilmesBO listaFilmesBO = new ListaFilmesBO();
@@ -310,7 +309,7 @@ public class Main {
 
 				int opcF;
 				System.out.println();
-				System.out.println("======= Avaliações =======");
+				System.out.println("== AVALIAÇÕES ==");
 				System.out.println("1 - Avaliar");
 				System.out.println("2 - Editar");
 				System.out.println("3 - Deletar");
@@ -418,24 +417,10 @@ public class Main {
 
 							
 							filmeBO.update(movie, filmeBO.searchId(movieKey));
-							
-							/*System.out.println("Digite seu id de valiador: ");
-							int evaluatorKey = cin.nextInt();
-
-							
-							
-							if (avaliadorBO.searchByKey(evaluatorKey) != null) {
-								avaliacao.setEvaluator(evaluatorKey);
-								
-								
-								
-								
-								
-							} else {
-								System.out.println("ERR: Avaliador Inválido");
-							}*/
 						}
+						
 						avaliacaoBO.update(avaliacao,avaliacaoID);//Updatando avaliação
+						
 					} else {
 						System.out.println("Avaliação não encontrada!");
 						System.out.println();
@@ -498,14 +483,14 @@ public class Main {
 				}
 				break;
 			}
-						// =====================================================
-						// LISTA DE FILMES
-						// =====================================================
+			// =====================================================
+			// LISTA DE FILMES
+			// =====================================================
 			
 			case 4:{
 				int opcF;
 				System.out.println();
-				System.out.println("======= Listas de filmes =======");
+				System.out.println("= Listas de filmes =");
 				System.out.println("1 - Criar nova lista");
 				System.out.println("2 - Adicionar filme a lista");
 				System.out.println("3 - Remover filme da lista");

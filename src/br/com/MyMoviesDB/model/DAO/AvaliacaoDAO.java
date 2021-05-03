@@ -46,6 +46,7 @@ public class AvaliacaoDAO implements BaseInterDAO<ListInterface<Object>>{
 
 		objOutput.close();
 	}
+	
 	@Override
 	public ListInterface<Object> reader() throws IOException, ClassNotFoundException {
 
@@ -71,21 +72,4 @@ public class AvaliacaoDAO implements BaseInterDAO<ListInterface<Object>>{
 
 		return list;
 	}
-	/*
-	public String textReader() throws IOException{
-		BufferedReader br = new BufferedReader(new FileReader(pathCSV));
-		StringBuffer sB = new StringBuffer();
-		String line = "";
-		while(line != null) {
-			sB.append(line + "\n");
-			line = br.readLine();
-		}
-		br.close();
-		return sB.toString();
-	}
-	public void textWriter(String text) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(pathCSV));
-		bw.append(text);
-		bw.close();
-	}*/
 }
