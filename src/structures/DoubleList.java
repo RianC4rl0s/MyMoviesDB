@@ -311,5 +311,5 @@ public class DoubleList<T> implements ListInterface<T> {
 			return -1;
 		}
 	}
-
+	
 }

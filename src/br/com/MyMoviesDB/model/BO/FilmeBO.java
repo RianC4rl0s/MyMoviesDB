@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import br.com.MyMoviesDB.model.DAO.BaseInterDAO;
 import br.com.MyMoviesDB.model.DAO.FilmeDAO;
+import br.com.MyMoviesDB.model.DAO.KeyDataDAO;
 import br.com.MyMoviesDB.model.VO.FilmeVO;
+import br.com.MyMoviesDB.model.VO.KeyData;
 import structures.DoubleList;
 import structures.ListInterface;
 
@@ -12,18 +14,22 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 
 	BaseInterDAO<ListInterface<Object>> dao;
 	ListInterface<Object> movies;
-
+	BaseInterDAO<KeyData> kdDao;
+	KeyData kd;
 	public FilmeBO() {
 
 		dao = new FilmeDAO();
-
+		kdDao = new KeyDataDAO();
 		try {
 			movies = dao.reader();
+			kd = kdDao.reader();
 		} catch (ClassNotFoundException e) {
 			movies = new DoubleList<Object>();
+			kd = (KeyData)new Object();
 			e.printStackTrace();
 		} catch (IOException e) {
 			movies = new DoubleList<Object>();
+			kd = (KeyData)new Object();
 			e.printStackTrace();
 		}
 	}
@@ -31,6 +37,34 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 	@Override
 	public void create(FilmeVO obj) {
 
+		
+		if (obj != null) {
+			if (obj.getTitle() != null) {
+				if (kd== null) {
+					kd.setMovieKey(1);
+					obj.setKey(kd.getMovieKey());
+					
+				} else {
+					//FilmeVO last = (FilmeVO) movies.peekLast(); // Pegando o último para incrementar a chave
+					obj.setKey(kd.getMovieKey() + 1);
+					kd.setAvaliacaoKey(kd.getMovieKey()+1);
+				}
+
+				movies.addLast(obj);
+				try {
+					dao.writer(movies);
+					kdDao.writer(kd);
+					System.out.println("Filme Cadastrado!");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("ERR: Título inválido");
+			}
+		} else {
+			System.out.println("ERR: Objeto inválido");
+		}
+		/*
 		if (obj != null) {
 			if (obj.getTitle() != null) {
 				if (movies.peekFirst() == null) {
@@ -53,7 +87,7 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 		} else {
 			System.out.println("ERR: Objeto inválido");
 		}
-
+*/
 	}
 
 	@Override
