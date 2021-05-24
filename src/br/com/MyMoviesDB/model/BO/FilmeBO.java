@@ -47,7 +47,7 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 				} else {
 					//FilmeVO last = (FilmeVO) movies.peekLast(); // Pegando o último para incrementar a chave
 					obj.setKey(kd.getMovieKey() + 1);
-					kd.setAvaliacaoKey(kd.getMovieKey()+1);
+					kd.setMovieKey(kd.getMovieKey()+1);
 				}
 
 				movies.addLast(obj);

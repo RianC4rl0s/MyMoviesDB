@@ -12,9 +12,9 @@ public class CreateKeyData {
 		KeyDataDAO dao = new KeyDataDAO();
 		
 		
-		kd.setAvaliatorkey(1);
-		kd.setAvaliatorkey(1);
-		kd.setMovieKey(1);
+		kd.setAvaliatorkey(0);
+		kd.setAvaliatorkey(0);
+		kd.setMovieKey(0);
 		
 		try {
 			dao.writer(kd);

@@ -6,7 +6,7 @@ public class ShellSort < T extends Comparable<? super T>>{
 	
 	public void shellSort(ListInterface<T> lista) {
 	
-		long tam = lista.getSize();
+		int tam =(int) lista.getSize();
 		int h = 0;
 		while (h  < tam) {
 			h = 3 *h+1;

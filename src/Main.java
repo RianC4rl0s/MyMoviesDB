@@ -28,7 +28,7 @@ public class Main {
 		FilmeBO filmeBO = new FilmeBO();
 		ListaFilmesBO listaFilmesBO = new ListaFilmesBO();
 		do {
-
+			
 			System.out.println("======== MENU ========");
 			System.out.println("1 - Filmes");
 			System.out.println("2 - Avaliadores");

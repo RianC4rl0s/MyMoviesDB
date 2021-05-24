@@ -1,7 +1,13 @@
 package br.com.MyMoviesDB.model.VO;
 
-public class KeyData {
+import java.io.Serializable;
 
+public class KeyData implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7632598238457964473L;
 	private int movieKey;
 	private int avaliatorkey;
 	private int avaliacaoKey;
