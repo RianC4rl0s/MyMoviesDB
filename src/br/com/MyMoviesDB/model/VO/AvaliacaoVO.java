@@ -7,7 +7,7 @@ import java.util.Calendar;
 import br.com.MyMoviesDB.model.BO.AvaliadorBO;
 import br.com.MyMoviesDB.model.BO.FilmeBO;
 
-public class AvaliacaoVO implements Serializable {
+public class AvaliacaoVO implements Serializable,Comparable<AvaliacaoVO> {
 	/**
 	 * 
 	 */
@@ -66,5 +66,18 @@ public class AvaliacaoVO implements Serializable {
 		return "[Avaliador = " + avaliador + ", Data = "
 				+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(date.getTime()) + ", Nota = " + evaluation
 				+ ", Crítica = " + criticism + ", Filme = " + movie.toString() + "]";
+	}
+
+	@Override
+	public int compareTo(AvaliacaoVO o) {
+		if(this.date.compareTo(o.date)< 0) {
+			return -1;
+		}else if(this.date.compareTo(o.date)> 0){
+			return 1;
+		}else if(this.date.compareTo(o.date)== 0) {
+			return 0;
+		}
+		
+		return 0;
 	}
 }

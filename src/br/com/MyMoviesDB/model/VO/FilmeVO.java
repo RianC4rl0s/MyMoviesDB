@@ -2,7 +2,7 @@ package br.com.MyMoviesDB.model.VO;
 
 import java.io.Serializable;
 
-public class FilmeVO implements Serializable {
+public class FilmeVO implements Serializable, Comparable<FilmeVO> {
 
 	/**
 	 * 
@@ -111,4 +111,17 @@ public class FilmeVO implements Serializable {
 		this.evaluationQt = evaluationQt;
 	}
 
+	@Override
+	public int compareTo(FilmeVO f2) {
+		
+		if(this.generalEvaluation.compareTo(f2.generalEvaluation)< 0) {
+			return -1;
+		}else if(this.generalEvaluation.compareTo(f2.generalEvaluation)> 0){
+			return 1;
+		}else if(this.generalEvaluation.compareTo(f2.generalEvaluation)== 0) {
+			return 0;
+		}
+		
+		return 0;
+	}
 }
