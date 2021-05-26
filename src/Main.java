@@ -491,6 +491,7 @@ public class Main {
 					
 					avaliacaoBO.ordernate(av);
 					
+					break;
 					
 				}
 				default:
