@@ -2,7 +2,7 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 
-
+import SortAlgorithms.ShellSort;
 import br.com.MyMoviesDB.model.BO.AvaliacaoBO;
 import br.com.MyMoviesDB.model.BO.AvaliadorBO;
 //import br.com.MyMoviesDB.model.BO.BaseInterBO;
@@ -12,6 +12,8 @@ import br.com.MyMoviesDB.model.VO.AvaliacaoVO;
 import br.com.MyMoviesDB.model.VO.AvaliadorVO;
 import br.com.MyMoviesDB.model.VO.FilmeVO;
 import br.com.MyMoviesDB.model.VO.ListaFilmesVO;
+
+import structures.ListInterface;
 //import structures.QueueInterface;
 //import structures.Queue;
 import structures.QueueWithList;
@@ -477,6 +479,19 @@ public class Main {
 
 					System.out.println();
 					break;
+				}
+				case 5:{
+					System.out.println();
+					System.out.println("ORDENAR AVALIAÇÕES");
+					ShellSort<AvaliacaoVO> ss = new ShellSort<AvaliacaoVO>();
+					
+					ListInterface<AvaliacaoVO> av = avaliacaoBO.listaAvaliacoes();
+					
+					ss.shellSort(av);
+					
+					avaliacaoBO.ordernate(av);
+					
+					
 				}
 				default:
 					System.out.println("ERR: Opção invalida!!!");

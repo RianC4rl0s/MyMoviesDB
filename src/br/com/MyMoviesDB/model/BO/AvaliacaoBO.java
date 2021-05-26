@@ -90,6 +90,22 @@ public class AvaliacaoBO implements BaseInterBO<AvaliacaoVO> {
 			return null;
 		}
 	}
+	
+	public ListInterface<AvaliacaoVO> listaAvaliacoes(){
+		ListInterface<AvaliacaoVO> temp = new DoubleList<AvaliacaoVO>();
+		for(int i = 1; i < (int)ratings.getSize();i++) {
+			temp.addLast((AvaliacaoVO)ratings.search(i));
+		}
+		
+		
+		return temp;
+	}
+	public void ordernate(ListInterface<AvaliacaoVO> lista) {
+		for(int i = 1; i < (int)ratings.getSize();i++) {
+			ratings.addLast((AvaliacaoVO)lista.search(i));
+		}
+		
+	}
 
 	public ListInterface<Object> searchByMovie(String movie) {
 

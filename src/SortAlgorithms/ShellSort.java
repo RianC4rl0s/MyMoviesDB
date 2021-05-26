@@ -6,8 +6,11 @@ public class ShellSort < T extends Comparable<? super T>>{
 	
 	public void shellSort(ListInterface<T> lista) {
 	
+		
+		
+		//TEM QUE TESTAR MAIS CASOS
 		int tam =(int) lista.getSize();
-		int h = 0;
+		int h = 1;
 		while (h  < tam) {
 			h = 3 *h+1;
 		}
@@ -15,15 +18,15 @@ public class ShellSort < T extends Comparable<? super T>>{
 		while(h > 1) {
 			h = h/3;
 		
-			for(int i = h;i < tam -1;i++) {
+			for(int i = h ;i <= tam;i++) {
 				T temp = lista.search(i);
 				
 				 int j = i -h;
 				 
-				 while(j >= 0 && (temp.compareTo(lista.search(j))<0 )){
+				 while(j >= 1 && (temp.compareTo(lista.search(j))<0 )){
 					 lista.updateData(lista.search(j),j+h);
 					 j = j-h;
-				 }
+				 } 
 				 
 				 lista.updateData(temp, j+h);
 				 
