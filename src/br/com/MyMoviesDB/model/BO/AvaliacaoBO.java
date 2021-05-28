@@ -100,9 +100,51 @@ public class AvaliacaoBO implements BaseInterBO<AvaliacaoVO> {
 		
 		return temp;
 	}
-	public void ordernate(ListInterface<AvaliacaoVO> lista) {
-		for(int i = 1; i < (int)ratings.getSize();i++) {
-			ratings.addLast((AvaliacaoVO)lista.search(i));
+	
+	public void sort() {
+		int size = (int) ratings.getSize();
+		
+		AvaliacaoVO vet[] = new AvaliacaoVO[size];
+		
+		for(int i = 1, j = 0; i <= size; i++, j++) {
+			vet[j] = (AvaliacaoVO) ratings.search(i);
+		}
+		
+		int h = 1;
+		
+		while(h < vet.length) {
+			h = 3 * h + 1;
+		}
+		
+		while(h > 1) {
+			h /= 3;
+			
+			for(int i = h; i < vet.length - 1; i++) {
+				AvaliacaoVO chosen = vet[i];
+				int j = i - h;
+				
+				while(j >= 0 && (chosen.compareTo(vet[j]) > 0)) {
+					vet[j + h] = vet[j];
+					j -= h;
+				}
+				
+				vet[j + h] = chosen;
+			}
+		}
+		
+		for(int i = 0; i < size; i++) {
+			ratings.removeLast();
+		}
+		
+		for(int i = 0; i < size; i++) {
+			ratings.addLast(vet[i]);
+		}
+		
+		try {
+			dao.writer(ratings);
+			System.out.println("Lista ordenada!");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 	}

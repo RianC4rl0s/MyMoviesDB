@@ -45,7 +45,6 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 					obj.setKey(kd.getMovieKey());
 					
 				} else {
-					//FilmeVO last = (FilmeVO) movies.peekLast(); // Pegando o último para incrementar a chave
 					obj.setKey(kd.getMovieKey() + 1);
 					kd.setMovieKey(kd.getMovieKey()+1);
 				}
@@ -64,30 +63,6 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 		} else {
 			System.out.println("ERR: Objeto inválido");
 		}
-		/*
-		if (obj != null) {
-			if (obj.getTitle() != null) {
-				if (movies.peekFirst() == null) {
-					obj.setKey(1);
-				} else {
-					FilmeVO last = (FilmeVO) movies.peekLast(); // Pegando o último para incrementar a chave
-					obj.setKey(last.getKey() + 1);
-				}
-
-				movies.addLast(obj);
-				try {
-					dao.writer(movies);
-					System.out.println("Filme Cadastrado!");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			} else {
-				System.out.println("ERR: Título inválido");
-			}
-		} else {
-			System.out.println("ERR: Objeto inválido");
-		}
-*/
 	}
 
 	@Override
@@ -117,7 +92,7 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 
 	@Override
 	public void delete(int id) {
-
+		
 		if (movies.search(id) != null) {
 
 			movies.remove(id);
@@ -205,5 +180,52 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 			}
 		}
 		return list;
+	}
+	
+	public void sort() {
+		int size = (int) movies.getSize();
+		
+		FilmeVO vet[] = new FilmeVO[size];
+		
+		for(int i = 1, j = 0; i <= size; i++, j++) {
+			vet[j] = (FilmeVO) movies.search(i);
+		}
+		
+		int h = 1;
+		
+		while(h < vet.length) {
+			h = 3 * h + 1;
+		}
+		
+		while(h > 1) {
+			h /= 3;
+			
+			for(int i = h; i < vet.length; i++) {
+				FilmeVO chosen = vet[i];
+				int j = i - h;
+				
+				while(j >= 0 && (chosen.compareTo(vet[j]) > 0)) {
+					vet[j + h] = vet[j];
+					j -= h;
+				}
+				
+				vet[j + h] = chosen;
+			}
+		}
+		
+		for(int i = 0; i < size; i++) {
+			movies.removeLast();
+		}
+		
+		for(int i = 0; i < size; i++) {
+			movies.addLast(vet[i]);
+		}	
+		
+		try {
+			dao.writer(movies);
+			System.out.println("Lista ordenada!");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

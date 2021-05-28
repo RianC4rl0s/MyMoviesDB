@@ -32,7 +32,7 @@ public class DoubleList<T> implements ListInterface<T> {
 		nextId = 1;
 		size = 0;
 	}
-
+	
 	@Override
 	public void show() {
 

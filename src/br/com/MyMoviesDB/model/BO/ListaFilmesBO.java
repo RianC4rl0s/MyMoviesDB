@@ -12,7 +12,7 @@ import structures.QueueInterface;
 public class ListaFilmesBO implements BaseInterBO<ListaFilmesVO>{
 	ListaFilmesDAO dao;
 	ListInterface<String> lists; // Mantendo o nome das listas de filmes
-	ListInterface<Object> movieList = new DoubleList<Object>();; // Mantendo a lista das listas de filmes
+	ListInterface<Object> movieList = new DoubleList<Object>(); // Mantendo a lista das listas de filmes
 	FilmeBO filmeBO = new FilmeBO();
 	
 	public ListaFilmesBO() {

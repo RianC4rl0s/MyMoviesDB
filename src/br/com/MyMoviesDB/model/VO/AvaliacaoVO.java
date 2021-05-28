@@ -70,14 +70,15 @@ public class AvaliacaoVO implements Serializable,Comparable<AvaliacaoVO> {
 
 	@Override
 	public int compareTo(AvaliacaoVO o) {
-		if(this.date.compareTo(o.date)< 0) {
+		long time = this.date.getTimeInMillis();
+		long timeO = o.date.getTimeInMillis();
+		
+		if(time < timeO) {
 			return -1;
-		}else if(this.date.compareTo(o.date)> 0){
+		}else if(time > timeO){
 			return 1;
-		}else if(this.date.compareTo(o.date)== 0) {
+		}else {
 			return 0;
 		}
-		
-		return 0;
 	}
 }

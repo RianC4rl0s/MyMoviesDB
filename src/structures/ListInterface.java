@@ -1,7 +1,7 @@
 package structures;
 
 public interface ListInterface <T> {
-
+	
 	void show();
 	void showReverse();
 	
