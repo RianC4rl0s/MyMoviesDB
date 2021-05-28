@@ -1,8 +1,10 @@
+package main;
 import java.util.Calendar;
 import java.util.Scanner;
 
 
 import SortAlgorithms.ShellSort;
+import addons.Iniciar;
 import br.com.MyMoviesDB.model.BO.AvaliacaoBO;
 import br.com.MyMoviesDB.model.BO.AvaliadorBO;
 //import br.com.MyMoviesDB.model.BO.BaseInterBO;
@@ -21,7 +23,10 @@ import structures.QueueWithList;
 public class Main {
 
 	public static void main(String[] args) {
-
+		Iniciar iniciar = new Iniciar();
+		iniciar.draw();
+		//═ ║ ╒ ╓ ╔ ╕╖ ╗ ╘ ╙ ╚ ╛ ╜ ╝ ╞ ╟ ╠ ╡ ╢ ╣ ╤ ╥ ╦ ╧ ╨ ╩ ╪ ╫ ╬
+		
 		int opc = 0;
 		Scanner cin = new Scanner(System.in);
 
@@ -31,12 +36,17 @@ public class Main {
 		ListaFilmesBO listaFilmesBO = new ListaFilmesBO();
 		do {
 			
-			System.out.println("======== MENU ========");
-			System.out.println("1 - Filmes");
-			System.out.println("2 - Avaliadores");
-			System.out.println("3 - Avaliações");
-			System.out.println("4 - Listas de Filmes");
-			System.out.println("5 - Sair");
+			
+			
+			System.out.println("╔════════════════════╗");
+			System.out.println("║======= MENU =======║");
+			System.out.println("╠════════════════════╣");
+			System.out.println("║1 - Filmes          ║");
+			System.out.println("║2 - Avaliadores     ║");
+			System.out.println("║3 - Avaliações      ║");
+			System.out.println("║4 - Listas de Filmes║");
+			System.out.println("║5 - Sair            ║");
+			System.out.println("╚════════════════════╝");
 			System.out.print("\nEscolha uma opção: ");
 
 			opc = cin.nextInt();
@@ -48,13 +58,14 @@ public class Main {
 			case 1: {
 
 				int opcF;
-
-				System.out.println();
-				System.out.println("======= FILMES =======");
-				System.out.println("1 - Cadastrar");
-				System.out.println("2 - Editar");
-				System.out.println("3 - Deletar");
-				System.out.println("4 - Listar");
+				System.out.println("╔════════════════════╗");
+				System.out.println("║====== Filmes ======║");
+				System.out.println("╠════════════════════╣");
+				System.out.println("║1 - Cadastrar       ║");
+				System.out.println("║2 - Editar          ║");
+				System.out.println("║3 - Deletar         ║");
+				System.out.println("║4 - Listar          ║");
+				System.out.println("╚════════════════════╝");
 				System.out.print("\nEscolha uma opção: ");
 
 				opcF = cin.nextInt();
@@ -65,9 +76,10 @@ public class Main {
 				case 1: {
 
 					FilmeVO movie = new FilmeVO();
-
 					System.out.println();
-					System.out.println("= CADASTRAR FILME =");
+					System.out.println("╔════════════════════╗");
+					System.out.println("║= Cadastrar Filme ==║");
+					System.out.println("╚════════════════════╝");
 
 					System.out.print("Título: ");
 					movie.setTitle(cin.nextLine());
@@ -97,10 +109,13 @@ public class Main {
 					FilmeVO movie = new FilmeVO();
 
 					System.out.println();
-					System.out.println("= EDITAR FILME =");
+					System.out.println("╔════════════════════╗");
+					System.out.println("║=== Editar Filme ===║");
+					System.out.println("╚════════════════════╝");
+
 					filmeBO.read();
 
-					System.out.print("Escolha o filme a ser editado pelo id: ");
+					System.out.print("Escolha o filme a ser editado pelo ID: ");
 					int id = cin.nextInt();
 					cin.nextLine();
 
@@ -138,10 +153,13 @@ public class Main {
 				case 3: {
 
 					System.out.println();
-					System.out.println("= DELETAR FILME =");
+					System.out.println("╔════════════════════╗");
+					System.out.println("║== Deletar Filme ===║");
+					System.out.println("╚════════════════════╝");
+
 					filmeBO.read();
 
-					System.out.print("Escolha o filme a ser deletado pelo id: ");
+					System.out.print("Escolha o filme a ser deletado pelo ID: ");
 					int id = cin.nextInt();
 					cin.nextLine();
 
@@ -166,7 +184,10 @@ public class Main {
 				case 4: {
 
 					System.out.println();
-					System.out.println("= LISTAR FILME =");
+					System.out.println("╔════════════════════╗");
+					System.out.println("║=== Listar Filme ===║");
+					System.out.println("╚════════════════════╝");
+
 					filmeBO.read();
 					System.out.println();
 
@@ -189,12 +210,14 @@ public class Main {
 
 				int opcF;
 
-				System.out.println();
-				System.out.println("==== AVALIADORES ====");
-				System.out.println("1 - Cadastrar");
-				System.out.println("2 - Editar");
-				System.out.println("3 - Deletar");
-				System.out.println("4 - Listar");
+				System.out.println("╔════════════════════╗");
+				System.out.println("║=== Avaliadores ====║");
+				System.out.println("╠════════════════════╣");
+				System.out.println("║1 - Cadastrar       ║");
+				System.out.println("║2 - Editar          ║");
+				System.out.println("║3 - Deletar         ║");
+				System.out.println("║4 - Listar          ║");
+				System.out.println("╚════════════════════╝");
 				System.out.print("\nEscolha uma opção: ");
 
 				opcF = cin.nextInt();
@@ -207,7 +230,9 @@ public class Main {
 					AvaliadorVO evaluator = new AvaliadorVO();
 
 					System.out.println();
-					System.out.println("= CADASTRAR AVALIADOR =");
+					System.out.println("╔═════════════════════╗");
+					System.out.println("║ Cadastrar Avaliador ║");
+					System.out.println("╚═════════════════════╝");
 
 					System.out.print("Nome: ");
 					evaluator.setName(cin.nextLine());
@@ -228,7 +253,9 @@ public class Main {
 					AvaliadorVO evaluator = new AvaliadorVO();
 
 					System.out.println();
-					System.out.println("= EDITAR AVALIADOR =");
+					System.out.println("╔═════════════════════╗");
+					System.out.println("║== Editar Avaliador =║");
+					System.out.println("╚═════════════════════╝");
 					avaliadorBO.read();
 
 					System.out.print("Escolha o avaliador a ser editado pelo id: ");
@@ -260,7 +287,9 @@ public class Main {
 				case 3: {
 
 					System.out.println();
-					System.out.println("= DELETAR AVALIADOR =");
+					System.out.println("╔═════════════════════╗");
+					System.out.println("║= Deletar Avaliador =║");
+					System.out.println("╚═════════════════════╝");
 					avaliadorBO.read();
 
 					System.out.print("Escolha o avaliador a ser deletado pelo id: ");
@@ -288,7 +317,9 @@ public class Main {
 				case 4: {
 
 					System.out.println();
-					System.out.println("= LISTAR AVALIADORES =");
+					System.out.println("╔═════════════════════╗");
+					System.out.println("║  Listar Avaliadores ║");
+					System.out.println("╚═════════════════════╝");
 					avaliadorBO.read();
 					System.out.println();
 
@@ -310,12 +341,14 @@ public class Main {
 			case 3: {
 
 				int opcF;
-				System.out.println();
-				System.out.println("== AVALIAÇÕES ==");
-				System.out.println("1 - Avaliar");
-				System.out.println("2 - Editar");
-				System.out.println("3 - Deletar");
-				System.out.println("4 - Listar");
+				System.out.println("╔════════════════════╗");
+				System.out.println("║==== Avaliação =====║");
+				System.out.println("╠════════════════════╣");
+				System.out.println("║1 - Avaliar         ║");
+				System.out.println("║2 - Editar          ║");
+				System.out.println("║3 - Deletar         ║");
+				System.out.println("║4 - Listar          ║");
+				System.out.println("╚════════════════════╝");
 				System.out.print("\nEscolha uma opção: ");
 
 				opcF = cin.nextInt();
@@ -323,7 +356,9 @@ public class Main {
 				switch (opcF) {
 				case 1: {
 					System.out.println();
-					System.out.println("= AVALIAR =");
+					System.out.println("╔═════════════════════╗");
+					System.out.println("║====== Avaliar ======║");
+					System.out.println("╚═════════════════════╝");
 					AvaliacaoVO avaliacao = new AvaliacaoVO();
 
 					filmeBO.read();
@@ -372,8 +407,9 @@ public class Main {
 				}
 				case 2: {
 					System.out.println();
-					System.out.println("= EDITAR AVALIAÇÂO =");
-
+					System.out.println("╔═════════════════════╗");
+					System.out.println("║= Editar Avaliaçao ==║");
+					System.out.println("╚═════════════════════╝");
 					AvaliacaoVO avaliacao;
 
 					avaliacaoBO.read();
@@ -432,8 +468,9 @@ public class Main {
 				}
 				case 3: {
 					System.out.println();
-					System.out.println("= DELETAR AVALIAÇÃO =");
-
+					System.out.println("╔═════════════════════╗");
+					System.out.println("║= Deletar Avliação ==║");
+					System.out.println("╚═════════════════════╝");
 					avaliacaoBO.read();
 
 					System.out.println("Digite o id da avaliação a ser deletada");
@@ -473,8 +510,9 @@ public class Main {
 				}
 				case 4: {
 					System.out.println();
-					System.out.println("= LISTAR AVALIAÇÕES =");
-
+					System.out.println("╔═════════════════════╗");
+					System.out.println("║= Listar Avaliações =║");
+					System.out.println("╚═════════════════════╝");
 					avaliacaoBO.read();
 
 					System.out.println();
@@ -505,13 +543,14 @@ public class Main {
 			
 			case 4:{
 				int opcF;
-				System.out.println();
-				System.out.println("= Listas de filmes =");
-				System.out.println("1 - Criar nova lista");
-				System.out.println("2 - Adicionar filme a lista");
-				System.out.println("3 - Remover filme da lista");
-				System.out.println("4 - Deletar");
-				System.out.println("5 - Mostrar nome e ID das listas");
+				System.out.println("╔════════════════════════════════╗");
+				System.out.println("║======== Lista de Filmes =======║");
+				System.out.println("╠════════════════════════════════╣");
+				System.out.println("║2 - Adicionar filme a lista     ║");
+				System.out.println("║3 - Remover filme da lista      ║");
+				System.out.println("║4 - Deletar                     ║");
+				System.out.println("║5 - Mostrar nome e ID das listas║");
+				System.out.println("╚════════════════════════════════╝");
 				System.out.print("\nEscolha uma opção: ");
 
 				opcF = cin.nextInt();
@@ -520,7 +559,9 @@ public class Main {
 				
 				case 1:{
 					System.out.println();
-					System.out.println("= CRIAR LISTA =");
+					System.out.println("╔═════════════════════╗");
+					System.out.println("║==== Criar Lista ====║");
+					System.out.println("╚═════════════════════╝");
 					System.out.println();
 					
 					ListaFilmesVO listaFilmes= new ListaFilmesVO();
@@ -584,8 +625,9 @@ public class Main {
 				}
 				case 2:{
 					System.out.println();
-					System.out.println("=  Adicionar filme a lista =");
-					System.out.println();
+					System.out.println("╔═══════════════════════════╗");
+					System.out.println("║= Adicionar Filme a lista =║");
+					System.out.println("╚═══════════════════════════╝");
 					
 					listaFilmesBO.read();
 					System.out.println("Escreva o id da lista");
@@ -616,9 +658,9 @@ public class Main {
 				
 				case 3:{
 					
-					System.out.println();
-					System.out.println("=  Remover filme a lista =");
-					System.out.println();
+					System.out.println("╔══════════════════════════╗");
+					System.out.println("║= Remover Filme da lista =║");
+					System.out.println("╚══════════════════════════╝");
 					
 					listaFilmesBO.read();
 					System.out.println("Escreva o id da lista");
@@ -639,9 +681,9 @@ public class Main {
 				}
 				
 				case 4:{
-					System.out.println();
-					System.out.println("= DELETAR LISTA DE FILMES =");
-					
+					System.out.println("╔══════════════════════════╗");
+					System.out.println("║  Deletar Lista de filmes ║");
+					System.out.println("╚══════════════════════════╝");
 					
 					System.out.println("Digite o id da lista a ser deletada");
 					int lsID = cin.nextInt();
