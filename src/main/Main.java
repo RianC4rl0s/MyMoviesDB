@@ -534,6 +534,7 @@ public class Main {
 				}
 				default:
 					System.out.println("ERR: Opção invalida!!!");
+				
 				}
 				break;
 			}
