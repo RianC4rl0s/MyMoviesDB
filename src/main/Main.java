@@ -3,11 +3,9 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 
-import SortAlgorithms.ShellSort;
 import addons.Iniciar;
 import br.com.MyMoviesDB.model.BO.AvaliacaoBO;
 import br.com.MyMoviesDB.model.BO.AvaliadorBO;
-//import br.com.MyMoviesDB.model.BO.BaseInterBO;
 import br.com.MyMoviesDB.model.BO.FilmeBO;
 import br.com.MyMoviesDB.model.BO.ListaFilmesBO;
 import br.com.MyMoviesDB.model.VO.AvaliacaoVO;
@@ -15,9 +13,6 @@ import br.com.MyMoviesDB.model.VO.AvaliadorVO;
 import br.com.MyMoviesDB.model.VO.FilmeVO;
 import br.com.MyMoviesDB.model.VO.ListaFilmesVO;
 
-import structures.ListInterface;
-//import structures.QueueInterface;
-//import structures.Queue;
 import structures.QueueWithList;
 
 public class Main {
@@ -65,6 +60,7 @@ public class Main {
 				System.out.println("║2 - Editar          ║");
 				System.out.println("║3 - Deletar         ║");
 				System.out.println("║4 - Listar          ║");
+				System.out.println("║5 - Ordenar         ║");
 				System.out.println("╚════════════════════╝");
 				System.out.print("\nEscolha uma opção: ");
 
@@ -192,6 +188,19 @@ public class Main {
 					System.out.println();
 
 					break;
+				}
+				
+				case 5:{
+					System.out.println();
+					System.out.println("╔════════════════════╗");
+					System.out.println("║== Ordenar Filmes ==║");
+					System.out.println("╚════════════════════╝");
+					
+					filmeBO.sort();
+					filmeBO.read();
+					System.out.println();
+					break;
+					
 				}
 
 				default: {
@@ -348,6 +357,7 @@ public class Main {
 				System.out.println("║2 - Editar          ║");
 				System.out.println("║3 - Deletar         ║");
 				System.out.println("║4 - Listar          ║");
+				System.out.println("║5 - Ordenar         ║");
 				System.out.println("╚════════════════════╝");
 				System.out.print("\nEscolha uma opção: ");
 
@@ -520,17 +530,15 @@ public class Main {
 				}
 				case 5:{
 					System.out.println();
-					System.out.println("ORDENAR AVALIAÇÕES");
-					ShellSort<AvaliacaoVO> ss = new ShellSort<AvaliacaoVO>();
+					System.out.println("╔════════════════════════╗");
+					System.out.println("║== Ordenar Avaliações ==║");
+					System.out.println("╚════════════════════════╝");
 					
-					ListInterface<AvaliacaoVO> av = avaliacaoBO.listaAvaliacoes();
-					
-					ss.shellSort(av);
-					
-					avaliacaoBO.ordernate(av);
+					avaliacaoBO.sort();
+					avaliacaoBO.read();
+					System.out.println();	
 					
 					break;
-					
 				}
 				default:
 					System.out.println("ERR: Opção invalida!!!");
@@ -547,10 +555,11 @@ public class Main {
 				System.out.println("╔════════════════════════════════╗");
 				System.out.println("║======== Lista de Filmes =======║");
 				System.out.println("╠════════════════════════════════╣");
+				System.out.println("║1 - Cadastrar lista             ║");
 				System.out.println("║2 - Adicionar filme a lista     ║");
 				System.out.println("║3 - Remover filme da lista      ║");
 				System.out.println("║4 - Deletar                     ║");
-				System.out.println("║5 - Mostrar nome e ID das listas║");
+				System.out.println("║5 - Listas cadastradas          ║");
 				System.out.println("╚════════════════════════════════╝");
 				System.out.print("\nEscolha uma opção: ");
 

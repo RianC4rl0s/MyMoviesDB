@@ -112,11 +112,12 @@ public class FilmeVO implements Serializable, Comparable<FilmeVO> {
 	}
 
 	@Override
-	public int compareTo(FilmeVO f2) {
-		
-		if(this.generalEvaluation.compareTo(f2.generalEvaluation)< 0) {
+	public int compareTo (FilmeVO f2) {
+		if(this.generalEvaluation.equals("N/A")) {
 			return -1;
-		}else if(this.generalEvaluation.compareTo(f2.generalEvaluation)> 0){
+		}else if(this.generalEvaluation.compareTo(f2.generalEvaluation) < 0) {
+			return -1;
+		}else if(this.generalEvaluation.compareTo(f2.generalEvaluation) > 0){
 			return 1;
 		}else if(this.generalEvaluation.compareTo(f2.generalEvaluation)== 0) {
 			return 0;
