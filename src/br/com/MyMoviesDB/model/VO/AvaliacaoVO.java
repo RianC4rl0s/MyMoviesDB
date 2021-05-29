@@ -3,6 +3,7 @@ package br.com.MyMoviesDB.model.VO;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import br.com.MyMoviesDB.model.BO.AvaliadorBO;
 import br.com.MyMoviesDB.model.BO.FilmeBO;
@@ -70,12 +71,12 @@ public class AvaliacaoVO implements Serializable,Comparable<AvaliacaoVO> {
 
 	@Override
 	public int compareTo(AvaliacaoVO o) {
-		long time = this.date.getTimeInMillis();
-		long timeO = o.date.getTimeInMillis();
+		Date time = this.date.getTime();
+		Date timeO = o.date.getTime();
 		
-		if(time < timeO) {
+		if(time.compareTo(timeO) < 0) {
 			return -1;
-		}else if(time > timeO){
+		}else if(time.compareTo(timeO) > 0){
 			return 1;
 		}else {
 			return 0;

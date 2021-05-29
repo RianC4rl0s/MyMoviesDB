@@ -118,8 +118,8 @@ public class AvaliacaoBO implements BaseInterBO<AvaliacaoVO> {
 		
 		while(h > 1) {
 			h /= 3;
-			
-			for(int i = h; i < vet.length - 1; i++) {
+
+			for(int i = h; i < vet.length; i++) {
 				AvaliacaoVO chosen = vet[i];
 				int j = i - h;
 				
@@ -154,6 +154,20 @@ public class AvaliacaoBO implements BaseInterBO<AvaliacaoVO> {
 		ListInterface<Object> list = new DoubleList<Object>();
 
 		return list;
+	}
+	
+	public boolean searchByMovie(int key) {
+		AvaliacaoVO avO;
+
+		for(int i = 1; i <= ratings.getSize(); i++) {
+			avO = (AvaliacaoVO) ratings.search(i);
+			
+			if(avO.getMovie() == key) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

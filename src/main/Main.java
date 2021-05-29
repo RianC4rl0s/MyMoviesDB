@@ -158,17 +158,26 @@ public class Main {
 					System.out.print("Escolha o filme a ser deletado pelo ID: ");
 					int id = cin.nextInt();
 					cin.nextLine();
+					
+					FilmeVO movie = filmeBO.search(id);
 
-					if (filmeBO.search(id) != null) {
+					if (movie != null) {
+						
+						if (!avaliacaoBO.searchByMovie(movie.getKey())) {
+							System.out.print("Tem certeza que deseja deletar? S - 1/N - 0");
+							int resp = cin.nextInt();
 
-						System.out.print("Tem certeza que deseja deletar? S - 1/N - 0");
-						int resp = cin.nextInt();
+							if (resp == 1) {
+								filmeBO.delete(id);
+							} else {
+								System.out.println("Filme não deletado");
+							}
 
-						if (resp == 1) {
-							filmeBO.delete(id);
+							System.out.println();
+						} else {
+							System.out.println("O filme contém avaliações!");
+							System.out.println();
 						}
-
-						System.out.println();
 					} else {
 						System.out.println("Filme não encontrado!");
 						System.out.println();
