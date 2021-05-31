@@ -204,7 +204,7 @@ public class FilmeBO implements BaseInterBO<FilmeVO> {
 				FilmeVO chosen = vet[i];
 				int j = i - h;
 				
-				while(j >= 0 && (chosen.compareTo(vet[j]) < 0)) {
+				while(j >= 0 && (chosen.compareTo(vet[j]) > 0)) {
 					vet[j + h] = vet[j];
 					j -= h;
 				}
